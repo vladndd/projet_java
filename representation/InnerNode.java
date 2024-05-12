@@ -1,7 +1,6 @@
 package representation;
 
 import java.util.List;
-import java.util.Scanner;
 import java.util.ArrayList;
 
 public class InnerNode extends Node {

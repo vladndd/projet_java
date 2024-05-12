@@ -1,7 +1,5 @@
 package representation;
 
-import java.util.Scanner;
-
 // Décorateur abstrait
 public abstract class NodeDecorator implements Event {
     protected Node node;
