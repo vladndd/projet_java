@@ -3,10 +3,9 @@ package core;
 import representation.ChanceNode;
 import representation.DecisionNode;
 import representation.Node;
-import representation.NodeImage;
-import representation.NodeSound;
 import representation.TerminalNode;
 import univers.base.BaseCharacter;
+import univers.base.Character;
 import univers.base.Planet;
 import univers.base.Race;
 import utility.Utility;
@@ -14,12 +13,11 @@ import utility.Utility;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Game implements Serializable {
     private Node currentNode;
     private List<Planet> planets = new ArrayList<>();
-    private List<BaseCharacter> characters = new ArrayList<>();
+    private List<Character> characters = new ArrayList<>();
 
     public Game() {
         initializePlanets();
@@ -72,7 +70,7 @@ public class Game implements Serializable {
         // Create character with validated choices
         Race race = races[raceChoice - 1];
         Planet planet = planets.get(planetChoice - 1);
-        BaseCharacter character = new BaseCharacter(name, 100, 10, race, planet);
+        Character character = new BaseCharacter(name, 100, 10, race, planet);
 
         characters.add(character);
 

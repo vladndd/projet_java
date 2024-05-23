@@ -1,6 +1,6 @@
 package representation;
 
-public abstract class Node {
+public abstract class Node implements Event {
     protected int id;
     protected String description;
 
