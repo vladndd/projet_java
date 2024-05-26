@@ -13,6 +13,7 @@ public class Explorer extends Character {
     public void interact() {
         System.out.println(nom + ": Explorons les mystères de cette planète !");
     }
+    
 
     @Override
     public void speak() {

@@ -14,7 +14,6 @@ public class Main {
         switch (choice) {
             case 1:
                 game = new Game();
-                game.initializeGame();
                 game.play();
                 break;
             case 2:

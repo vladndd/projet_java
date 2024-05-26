@@ -34,4 +34,8 @@ public class DecisionNode extends Node {
 
         return options.get(choice - 1);
     }
+
+    public List<Node> getOptions() {
+        return options;
+    }
 }
