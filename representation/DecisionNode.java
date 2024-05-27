@@ -28,8 +28,6 @@ public class DecisionNode extends Node {
 
         int choice = Utility.scanner.nextInt();
 
-        System.out.println("Entrez le numéro de l'option:");
-
         // Scanner sc = new Scanner(System.in);
 
         return options.get(choice - 1);

@@ -37,4 +37,8 @@ public class Planet {
     public List<Race> getRacesIndigenes() {
         return racesIndigenes;
     }
+
+    public List<City> getCities() {
+        return cities;
+    }
 }
