@@ -16,6 +16,7 @@ public class City {
     public String getName() {
         return name;
     }
+
     public Planet getPlanet() {
         return planet;
     }

@@ -25,6 +25,11 @@ public class ChanceNode extends Node {
         return outcomes.get(index);
     }
 
+    public Node checkNext() {
+        int index = random.nextInt(outcomes.size());
+        return outcomes.get(index);
+    }
+
     public List<Node> getOutcomes() {
         return outcomes;
     }

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import utility.Utility;
 
 // Nœud de décision où le joueur doit faire un choix
-public class DecisionNode extends Node {
+public class DecisionNode extends Node implements Optionable {
     private List<Node> options;
 
     public DecisionNode(int id, String description) {
@@ -31,6 +31,10 @@ public class DecisionNode extends Node {
         // Scanner sc = new Scanner(System.in);
 
         return options.get(choice - 1);
+    }
+
+    public Node checkNext() {
+        return options.get(0);
     }
 
     public List<Node> getOptions() {

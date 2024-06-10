@@ -9,7 +9,6 @@ public class Enemy {
     private boolean isAlive = true;
     private boolean isBoss = false;
 
-
     public Enemy(String name, int health, int attack, boolean isBoss) {
         this.name = name;
         this.health = health;

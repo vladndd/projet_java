@@ -5,9 +5,7 @@ import univers.base.City;
 import univers.base.Planet;
 import utility.Utility;
 
-import java.security.PublicKey;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Stack;
 
 public class InnerNode extends Node {
@@ -22,8 +20,8 @@ public class InnerNode extends Node {
         super(id, description);
         this.nextNodes = new Stack<>();
 
-
     }
+
     public InnerNode(int id, String description, boolean planetSelector, boolean citySelector) {
         super(id, description);
         this.nextNodes = new Stack<>();
@@ -40,9 +38,6 @@ public class InnerNode extends Node {
         return citySelector;
     }
 
-
-
-
     public void addNextNode(Node node) {
         nextNodes.push(node);
     }
@@ -53,6 +48,13 @@ public class InnerNode extends Node {
             return null;
         }
         return nextNodes.pop();
+    }
+
+    public Node checkNext() {
+        if (nextNodes.isEmpty()) {
+            return null;
+        }
+        return nextNodes.peek();
     }
 
     public void display() {
@@ -84,13 +86,11 @@ public class InnerNode extends Node {
     public Planet choosePlanet() {
         List<Planet> planets = Game.PLANETS_LIST;
 
-
         for (int i = 0; i < planets.size(); i++) {
             System.out.println(i + 1 + ". " + planets.get(i).getName());
         }
 
         int choice = Utility.scanner.nextInt();
-
 
         // Scanner sc = new Scanner(System.in);
 

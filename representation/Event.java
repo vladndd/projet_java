@@ -5,4 +5,5 @@ public interface Event {
     void display();
 
     Node chooseNext();
+
 }

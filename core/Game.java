@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import javax.swing.ImageIcon;
+
 public class Game implements Serializable {
     private Node currentNode;
     public static final List<Planet> PLANETS_LIST = new ArrayList<>();
@@ -27,14 +29,40 @@ public class Game implements Serializable {
     private Set<Planet> visitedPlanets = new HashSet<>();
     private Set<City> visitedCities = new HashSet<>();
 
-
-
     public Game() {
         initializePlanets();
         initializeCitiesOnPlanets();
         initializeCharacter();
         initializeBosses();
         createNodePool();
+    }
+
+    public Node getCurrentNode() {
+        return currentNode;
+    }
+
+    public void advanceToNode(int nodeId) {
+
+        System.out.println("Advancing to node: " + nodeId);
+
+        if (currentNode instanceof Optionable) {
+            List<Node> options = ((Optionable) currentNode).getOptions();
+            for (Node option : options) {
+                if (option.getId() == nodeId) {
+                    currentNode = option;
+                    break;
+                }
+            }
+        } else {
+            Node nextNode = currentNode.chooseNext();
+            if (nextNode.getId() == nodeId) {
+                currentNode = nextNode;
+            }
+        }
+
+        if (currentNode instanceof TerminalNode) {
+            System.out.println("Game over: " + currentNode.getDescription());
+        }
     }
 
     private Node randomEvent() {
@@ -81,7 +109,8 @@ public class Game implements Serializable {
 
         int raceChoice = getValidInput("Choose your race: (1-" + races.length + ")", races.length);
 
-        int planetChoice = getValidInput("Choose your starting planet: (1-" + PLANETS_LIST.size() + ")", PLANETS_LIST.size());
+        int planetChoice = getValidInput("Choose your starting planet: (1-" + PLANETS_LIST.size() + ")",
+                PLANETS_LIST.size());
 
         // Create character with validated choices
         Race race = races[raceChoice - 1];
@@ -95,56 +124,58 @@ public class Game implements Serializable {
                         + planet.getName() + "!");
     }
 
-    public void play() {
-        while (!(currentNode instanceof TerminalNode)) {
-            currentNode.display();
+    // public void play() {
+    // while (!(currentNode instanceof TerminalNode)) {
+    // currentNode.display();
 
-            if (currentNode instanceof DecisionNode || currentNode instanceof InnerNode) {
+    // if (currentNode instanceof DecisionNode || currentNode instanceof InnerNode)
+    // {
 
-                Node node = currentNode;
-//                 Random event with 50% chance
-                if (random.nextBoolean()) {
-                    if (! randomEvents.isEmpty()) {
-                        Node randomEvent = randomEvent();
-                        randomEvent.display();
-                        Node outcome = randomEvent.chooseNext();
+    // Node node = currentNode;
+    // // Random event with 50% chance
+    // // if (random.nextBoolean()) {
+    // // if (!randomEvents.isEmpty()) {
+    // // Node randomEvent = randomEvent();
+    // // randomEvent.display();
+    // // Node outcome = randomEvent.chooseNext();
 
-                        outcome.display();
-                    }
-                }
+    // // outcome.display();
+    // // }
+    // // }
 
-                if (currentNode instanceof  InnerNode) {
-                    InnerNode innerNode = (InnerNode) currentNode;
-                    if (innerNode.isPlanetSelector()) {
-                        Planet planet = innerNode.choosePlanet();
-                        currentPlanet = planet;
-                        visitedPlanets.add(planet);
+    // if (currentNode instanceof InnerNode) {
+    // InnerNode innerNode = (InnerNode) currentNode;
+    // if (innerNode.isPlanetSelector()) {
+    // Planet planet = innerNode.choosePlanet();
+    // currentPlanet = planet;
+    // visitedPlanets.add(planet);
 
-                    }
+    // }
 
-                    if (innerNode.isCitySelector()) {
-                        City city = innerNode.chooseCity(this.currentPlanet);
-                        currentCity = city;
-                        visitedCities.add(city);
-                    }
-                }
+    // if (innerNode.isCitySelector()) {
+    // City city = innerNode.chooseCity(this.currentPlanet);
+    // currentCity = city;
+    // visitedCities.add(city);
+    // }
+    // }
 
+    // currentNode = node.chooseNext();
 
-                currentNode = node.chooseNext();
+    // if (visitedPlanets.containsAll(PLANETS_LIST) &&
+    // visitedCities.containsAll(cities)) {
+    // System.out.println("You have explored all planets and cities!");
+    // currentNode = new TerminalNode(99, "Congratulations! You have explored the
+    // entire galaxy!");
+    // }
 
-                if (visitedPlanets.containsAll(PLANETS_LIST) && visitedCities.containsAll(cities)) {
-                    System.out.println("You have explored all planets and cities!");
-                    currentNode = new TerminalNode(99, "Congratulations! You have explored the entire galaxy!");
-                }
+    // if (currentNode instanceof TerminalNode) {
+    // currentNode.display();
+    // break;
+    // }
 
-                if (currentNode instanceof TerminalNode) {
-                    currentNode.display();
-                    break;
-                }
-
-            }
-        }
-    }
+    // }
+    // }
+    // }
 
     public void saveGame(String filename) throws IOException {
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename));
@@ -195,47 +226,39 @@ public class Game implements Serializable {
         }
     }
 
-
-
     // TODO: ADD RANDOM MAP GENERATION, ADD NODE TYPES (ATTACK , TRADE ETC..)
 
     private List<Node> createNodePool() {
         List<Node> nodePool = new ArrayList<>();
 
         // Create decision nodes based on event names and descriptions
-        DecisionNode decisionNode0 = new DecisionNode(0, "Your home planet is being invaded.");
+        InnerNode innerNode0 = new InnerNode(0, "Your home planet is being invaded.");
+        innerNode0
+                .setBackgroundImage(new ImageIcon("https://github.com/vladndd/projet_java/blob/main/images/image.jpg"));
 
-        InnerNode innerNode1 = new InnerNode(1, "You escape to open space.");
-        InnerNode innerNode2 = new InnerNode(2, "You find a spaceship ready for departure.");
-
+        InnerNode innerNode1 = new InnerNode(1, "You managed to escape to open space to seek new adventures...");
+        innerNode1.setBackgroundImage(new ImageIcon("path/to/space_escape.jpg"));
 
         // Adding options to decision nodes logically
-        decisionNode0.addOption(innerNode1); // Escape to space
-        decisionNode0.addOption(innerNode2); // Find spaceship
+        innerNode0.addNextNode(innerNode1); // Escape to space
 
-        InnerNode planetNode =  new InnerNode(3, "Select a planet to land on.", true, false);
+        InnerNode planetNode = new InnerNode(3, "You stand upon the choice of which planet to go to..", true, false);
+        planetNode.setBackgroundImage(new ImageIcon("path/to/choose_planet.jpg"));
 
         innerNode1.addNextNode(planetNode);
 
-        InnerNode cityNode = new InnerNode(4, "Select a city to land in.", false, true);
+        // Add HP and other locators, possibility to check inventory, etc.
+        DecisionNode settledDecision = new DecisionNode(4,
+                "You are settled down on your new planet, exhausted and without food. What are you going to do?");
+        settledDecision.setBackgroundImage(new ImageIcon("path/to/new_planet.jpg"));
 
-        planetNode.addNextNode(cityNode);
+        planetNode.addNextNode(settledDecision);
 
-        cityNode.addNextNode(new TerminalNode(5, "You find a new city on new home planet."));
-        innerNode2.addNextNode(new TerminalNode(4, "You find a new home planet."));
+        settledDecision.addOption(new TerminalNode(5, "You have decided to explore the planet."));
+        settledDecision.addOption(new TerminalNode(6, "You have decided to trade with the locals."));
+        settledDecision.addOption(new TerminalNode(7, "You have decided to attack the locals."));
 
-
-        // Populate randomEvents with chance nodes (example)
-        ChanceNode alienEncounter = new ChanceNode(6, "You encounter an alien.");
-        alienEncounter.addOutcome(new DecisionNode(7, "The alien is hostile and attacks!"));
-        alienEncounter.addOutcome(new DecisionNode(8, "The alien is friendly and offers to trade."));
-
-
-        randomEvents.add(alienEncounter);
-
-
-        this.currentNode = decisionNode0;
+        this.currentNode = innerNode0;
         return nodePool;
     }
-
 }
