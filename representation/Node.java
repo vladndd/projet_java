@@ -1,5 +1,7 @@
 package representation;
 
+import java.awt.MediaTracker;
+
 import javax.swing.ImageIcon;
 
 public abstract class Node implements Event {
@@ -33,8 +35,12 @@ public abstract class Node implements Event {
         return backgroundImage;
     }
 
-    public void setBackgroundImage(ImageIcon backgroundImage) {
-        this.backgroundImage = backgroundImage;
+    public void setBackgroundImage(String imagePath) {
+        this.backgroundImage = new ImageIcon(imagePath);
+        System.out.println("Loading image from: " + imagePath);
+        if (backgroundImage.getImageLoadStatus() != MediaTracker.COMPLETE) {
+            System.out.println("Error loading image: " + imagePath);
+        }
     }
 
 }

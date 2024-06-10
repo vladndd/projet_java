@@ -233,24 +233,22 @@ public class Game implements Serializable {
 
         // Create decision nodes based on event names and descriptions
         InnerNode innerNode0 = new InnerNode(0, "Your home planet is being invaded.");
+
         innerNode0
-                .setBackgroundImage(new ImageIcon("https://github.com/vladndd/projet_java/blob/main/images/image.jpg"));
+                .setBackgroundImage("./images/image.jpg");
 
         InnerNode innerNode1 = new InnerNode(1, "You managed to escape to open space to seek new adventures...");
-        innerNode1.setBackgroundImage(new ImageIcon("path/to/space_escape.jpg"));
 
         // Adding options to decision nodes logically
         innerNode0.addNextNode(innerNode1); // Escape to space
 
         InnerNode planetNode = new InnerNode(3, "You stand upon the choice of which planet to go to..", true, false);
-        planetNode.setBackgroundImage(new ImageIcon("path/to/choose_planet.jpg"));
 
         innerNode1.addNextNode(planetNode);
 
         // Add HP and other locators, possibility to check inventory, etc.
         DecisionNode settledDecision = new DecisionNode(4,
                 "You are settled down on your new planet, exhausted and without food. What are you going to do?");
-        settledDecision.setBackgroundImage(new ImageIcon("path/to/new_planet.jpg"));
 
         planetNode.addNextNode(settledDecision);
 

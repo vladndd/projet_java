@@ -35,10 +35,15 @@ public class GameUI extends JFrame implements ActionListener {
         descriptionArea.setLineWrap(true);
         descriptionArea.setWrapStyleWord(true);
         descriptionArea.setEditable(false);
-        backgroundLabel.add(new JScrollPane(descriptionArea), BorderLayout.CENTER);
+        descriptionArea.setOpaque(false); // Make the text area transparent
+        JScrollPane scrollPane = new JScrollPane(descriptionArea);
+        scrollPane.setOpaque(false); // Make the scroll pane transparent
+        scrollPane.getViewport().setOpaque(false); // Make the viewport transparent
+        backgroundLabel.add(scrollPane, BorderLayout.CENTER);
 
         optionsPanel = new JPanel();
         optionsPanel.setLayout(new GridLayout(0, 1));
+        optionsPanel.setOpaque(false); // Make the options panel transparent
         backgroundLabel.add(optionsPanel, BorderLayout.SOUTH);
 
         updateDisplay();
