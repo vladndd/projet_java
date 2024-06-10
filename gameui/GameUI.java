@@ -1,12 +1,10 @@
 package gameui;
 
 import javax.swing.*;
-
 import core.Game;
 import representation.Node;
 import representation.Optionable;
 import representation.TerminalNode;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,29 +20,25 @@ public class GameUI extends JFrame implements ActionListener {
         this.game = game;
 
         setTitle("Space Adventure Game");
-        setSize(850, 500);
+        setSize(700, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setLayout(new BorderLayout());
 
         backgroundLabel = new JLabel();
         backgroundLabel.setLayout(new BorderLayout());
-        add(backgroundLabel, BorderLayout.CENTER);
+        add(backgroundLabel, BorderLayout.NORTH); // Add the backgroundLabel to the top
 
         descriptionArea = new JTextArea();
         descriptionArea.setLineWrap(true);
         descriptionArea.setWrapStyleWord(true);
         descriptionArea.setEditable(false);
-        descriptionArea.setOpaque(false); // Make the text area transparent
         JScrollPane scrollPane = new JScrollPane(descriptionArea);
-        scrollPane.setOpaque(false); // Make the scroll pane transparent
-        scrollPane.getViewport().setOpaque(false); // Make the viewport transparent
-        backgroundLabel.add(scrollPane, BorderLayout.CENTER);
+        add(scrollPane, BorderLayout.CENTER); // Add the descriptionArea to the center
 
         optionsPanel = new JPanel();
         optionsPanel.setLayout(new GridLayout(0, 1));
-        optionsPanel.setOpaque(false); // Make the options panel transparent
-        backgroundLabel.add(optionsPanel, BorderLayout.SOUTH);
+        add(optionsPanel, BorderLayout.SOUTH); // Add the optionsPanel to the bottom
 
         updateDisplay();
 
@@ -58,16 +52,11 @@ public class GameUI extends JFrame implements ActionListener {
 
         optionsPanel.removeAll();
 
-        optionsPanel.removeAll();
-
         if (currentNode instanceof TerminalNode) {
-
-            JButton button = new JButton("Game over , restart");
-
+            JButton button = new JButton("Game over, restart");
             button.setActionCommand(String.valueOf(1));
             button.addActionListener(this);
             optionsPanel.add(button);
-
         } else if (currentNode instanceof Optionable) {
             List<Node> options = ((Optionable) currentNode).getOptions();
             for (Node option : options) {
@@ -85,7 +74,6 @@ public class GameUI extends JFrame implements ActionListener {
 
         ImageIcon backgroundImage = currentNode.getBackgroundImage();
 
-        System.out.println("Background image: " + backgroundImage);
         if (backgroundImage != null) {
             backgroundLabel.setIcon(backgroundImage);
         } else {
@@ -94,7 +82,6 @@ public class GameUI extends JFrame implements ActionListener {
 
         optionsPanel.revalidate();
         optionsPanel.repaint();
-
     }
 
     @Override
