@@ -22,7 +22,7 @@ public class GameUI extends JFrame implements ActionListener {
         this.game = game;
 
         setTitle("Space Adventure Game");
-        setSize(800, 600);
+        setSize(850, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setLayout(new BorderLayout());

@@ -235,7 +235,7 @@ public class Game implements Serializable {
         InnerNode innerNode0 = new InnerNode(0, "Your home planet is being invaded.");
 
         innerNode0
-                .setBackgroundImage("./images/image.jpg");
+                .setBackgroundImage("./images/scene1.jpg");
 
         InnerNode innerNode1 = new InnerNode(1, "You managed to escape to open space to seek new adventures...");
 
