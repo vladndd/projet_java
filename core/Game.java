@@ -13,6 +13,7 @@ import java.util.Random;
 import java.util.Set;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 public class Game implements Serializable {
     private Node currentNode;
@@ -65,47 +66,31 @@ public class Game implements Serializable {
         }
     }
 
-    private Node randomEvent() {
-        return randomEvents.get(random.nextInt(randomEvents.size()));
-    }
-
-    private int getValidInput(String prompt, int max) {
-        int choice = 0;
-        do {
-            System.out.println(prompt);
-            while (!Utility.scanner.hasNextInt()) {
-                System.out.println("Please enter a number.");
-                Utility.scanner.next(); // Move scanner cursor to next to avoid infinite loop
-            }
-            choice = Utility.scanner.nextInt();
-            if (choice < 1 || choice > max) {
-                System.out.println("Invalid choice. Please try again.");
-            }
-        } while (choice < 1 || choice > max);
-        return choice;
-    }
+    // private Node randomEvent() {
+    // return randomEvents.get(random.nextInt(randomEvents.size()));
+    // }
 
     public void initializeCharacter() {
         // Initialize characters here
-        System.out.println("Welcome to the Space Adventure Game!");
-        System.out.println("Let's create your character!");
+        JOptionPane.showMessageDialog(null, "Welcome to the Space Adventure Game! Let's create your character!");
 
         // Displaying planets with indices
-        System.out.println("Available planets:");
+        String planetMessage = "Available planets:\n";
         for (int i = 0; i < PLANETS_LIST.size(); i++) {
-            System.out.println((i + 1) + ": " + PLANETS_LIST.get(i).getName());
+            planetMessage += (i + 1) + ": " + PLANETS_LIST.get(i).getName() + "\n";
         }
 
         // Displaying races with indices
         Race[] races = Race.values();
-        System.out.println("Available races:");
+        String raceMessage = "Available races:\n";
         for (int i = 0; i < races.length; i++) {
-            System.out.println((i + 1) + ": " + races[i].name());
+            raceMessage += (i + 1) + ": " + races[i].name() + "\n";
         }
-        System.out.println("Your adventure starts here!");
 
-        System.out.println("Enter your name: ");
-        String name = Utility.scanner.nextLine();
+        JOptionPane.showMessageDialog(null, planetMessage);
+        JOptionPane.showMessageDialog(null, raceMessage);
+
+        String name = JOptionPane.showInputDialog("Enter your name:");
 
         int raceChoice = getValidInput("Choose your race: (1-" + races.length + ")", races.length);
 
@@ -119,9 +104,25 @@ public class Game implements Serializable {
 
         characters.add(character);
 
-        System.out.println(
+        JOptionPane.showMessageDialog(null,
                 "Your character, " + character.getName() + " " + character.getRace() + ", has been created on planet "
                         + planet.getName() + "!");
+    }
+
+    private int getValidInput(String prompt, int max) {
+        int choice = 0;
+        do {
+            String input = JOptionPane.showInputDialog(prompt);
+            try {
+                choice = Integer.parseInt(input);
+                if (choice < 1 || choice > max) {
+                    JOptionPane.showMessageDialog(null, "Invalid choice. Please try again.");
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Please enter a number.");
+            }
+        } while (choice < 1 || choice > max);
+        return choice;
     }
 
     // public void play() {
