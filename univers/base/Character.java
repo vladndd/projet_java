@@ -56,6 +56,10 @@ public abstract class Character implements Interact {
         return planet;
     }
 
+    public String getStartPlanetName() {
+        return planet.getName();
+    }
+
     public String getName() {
         return nom;
     }

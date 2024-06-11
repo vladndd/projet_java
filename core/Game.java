@@ -33,13 +33,16 @@ public class Game implements Serializable {
     public Game() {
         initializePlanets();
         initializeCitiesOnPlanets();
-        initializeCharacter();
         initializeBosses();
         createNodePool();
     }
 
     public Node getCurrentNode() {
         return currentNode;
+    }
+
+    public void addCharacter(Character character) {
+        characters.add(character);
     }
 
     public void advanceToNode(int nodeId) {
@@ -70,60 +73,21 @@ public class Game implements Serializable {
     // return randomEvents.get(random.nextInt(randomEvents.size()));
     // }
 
-    public void initializeCharacter() {
-        // Initialize characters here
-        JOptionPane.showMessageDialog(null, "Welcome to the Space Adventure Game! Let's create your character!");
-
-        // Displaying planets with indices
-        String planetMessage = "Available planets:\n";
-        for (int i = 0; i < PLANETS_LIST.size(); i++) {
-            planetMessage += (i + 1) + ": " + PLANETS_LIST.get(i).getName() + "\n";
-        }
-
-        // Displaying races with indices
-        Race[] races = Race.values();
-        String raceMessage = "Available races:\n";
-        for (int i = 0; i < races.length; i++) {
-            raceMessage += (i + 1) + ": " + races[i].name() + "\n";
-        }
-
-        JOptionPane.showMessageDialog(null, planetMessage);
-        JOptionPane.showMessageDialog(null, raceMessage);
-
-        String name = JOptionPane.showInputDialog("Enter your name:");
-
-        int raceChoice = getValidInput("Choose your race: (1-" + races.length + ")", races.length);
-
-        int planetChoice = getValidInput("Choose your starting planet: (1-" + PLANETS_LIST.size() + ")",
-                PLANETS_LIST.size());
-
-        // Create character with validated choices
-        Race race = races[raceChoice - 1];
-        Planet planet = PLANETS_LIST.get(planetChoice - 1);
-        Character character = new BaseCharacter(name, 100, 10, race, planet);
-
-        characters.add(character);
-
-        JOptionPane.showMessageDialog(null,
-                "Your character, " + character.getName() + " " + character.getRace() + ", has been created on planet "
-                        + planet.getName() + "!");
-    }
-
-    private int getValidInput(String prompt, int max) {
-        int choice = 0;
-        do {
-            String input = JOptionPane.showInputDialog(prompt);
-            try {
-                choice = Integer.parseInt(input);
-                if (choice < 1 || choice > max) {
-                    JOptionPane.showMessageDialog(null, "Invalid choice. Please try again.");
-                }
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Please enter a number.");
-            }
-        } while (choice < 1 || choice > max);
-        return choice;
-    }
+    // private int getValidInput(String prompt, int max) {
+    // int choice = 0;
+    // do {
+    // String input = JOptionPane.showInputDialog(prompt);
+    // try {
+    // choice = Integer.parseInt(input);
+    // if (choice < 1 || choice > max) {
+    // JOptionPane.showMessageDialog(null, "Invalid choice. Please try again.");
+    // }
+    // } catch (NumberFormatException e) {
+    // JOptionPane.showMessageDialog(null, "Please enter a number.");
+    // }
+    // } while (choice < 1 || choice > max);
+    // return choice;
+    // }
 
     // public void play() {
     // while (!(currentNode instanceof TerminalNode)) {
