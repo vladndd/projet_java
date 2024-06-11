@@ -28,7 +28,7 @@ public abstract class Character implements Interact {
 
     public abstract void fight();
 
-    public String[] checkInventory() {
+    public String[] getInventory() {
         return inventory.keySet().toArray(new String[0]);
     }
 

@@ -1,6 +1,7 @@
 package gameui;
 
 import javax.swing.*;
+
 import core.Game;
 import representation.Node;
 import representation.Optionable;
@@ -19,34 +20,76 @@ public class GameUI extends JFrame implements ActionListener {
     private JTextArea descriptionArea;
     private JPanel optionsPanel;
     private JLabel backgroundLabel;
+    private JTextArea statsArea;
 
     public GameUI(Game game) {
         this.game = game;
 
         setTitle("Space Adventure Game");
-        setSize(700, 500);
+        setSize(700, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
 
         setLayout(new BorderLayout());
 
+        // Create a main content panel that will hold the scene image and other
+        // components
+        JPanel mainContentPanel = new JPanel(new BorderLayout());
+        mainContentPanel.setOpaque(false);
+        add(mainContentPanel, BorderLayout.CENTER);
+
+        // Add the scene image to the center of the main content panel
         backgroundLabel = new JLabel();
         backgroundLabel.setLayout(new BorderLayout());
-        add(backgroundLabel, BorderLayout.NORTH); // Add the backgroundLabel to the top
+        mainContentPanel.add(backgroundLabel, BorderLayout.CENTER);
+
+        // Create stats panel at the top
+        JPanel statsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        statsPanel.setOpaque(false);
+        statsArea = new JTextArea(5, 20); // Adjust rows and columns as needed
+        statsArea.setEditable(false);
+        statsArea.setOpaque(false);
+        statsArea.setForeground(Color.BLACK);
+        statsPanel.add(statsArea);
+        mainContentPanel.add(statsPanel, BorderLayout.NORTH); // Add statsPanel to top of mainContentPanel
+
+        // Create description panel at the bottom
+        JPanel descriptionPanel = new JPanel(new BorderLayout());
+        descriptionPanel.setOpaque(false);
 
         descriptionArea = new JTextArea();
         descriptionArea.setLineWrap(true);
         descriptionArea.setWrapStyleWord(true);
         descriptionArea.setEditable(false);
+        descriptionArea.setOpaque(false);
+        descriptionArea.setForeground(Color.BLACK);
         JScrollPane scrollPane = new JScrollPane(descriptionArea);
-        add(scrollPane, BorderLayout.CENTER); // Add the descriptionArea to the center
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+        scrollPane.setBorder(null);
+        descriptionPanel.add(scrollPane, BorderLayout.CENTER);
 
         optionsPanel = new JPanel();
+        optionsPanel.setOpaque(false);
         optionsPanel.setLayout(new GridLayout(0, 1));
-        add(optionsPanel, BorderLayout.SOUTH); // Add the optionsPanel to the bottom
+        descriptionPanel.add(optionsPanel, BorderLayout.SOUTH);
+
+        mainContentPanel.add(descriptionPanel, BorderLayout.SOUTH); // Add descriptionPanel to bottom of
+                                                                    // mainContentPanel
 
         initializeCharacter();
 
         setVisible(true);
+    }
+
+    private void updateStats(BaseCharacter character) {
+        String statsText = "Name: " + character.getName() + "\n" +
+                "Race: " + character.getRace() + "\n" +
+                "Current Planet: " + character.getStartPlanetName() + "\n" +
+                "Health: " + character.getHealth() + "\n" +
+                "Force: " + character.getForce() + "\n" +
+                "Inventory: " + character.getInventory();
+        statsArea.setText(statsText);
     }
 
     private void initializeCharacter() {
@@ -60,11 +103,23 @@ public class GameUI extends JFrame implements ActionListener {
         for (int i = 0; i < Game.PLANETS_LIST.size(); i++) {
             Planet planet = Game.PLANETS_LIST.get(i);
             ImageIcon icon = new ImageIcon("./images/planets/" + planet.getName().toLowerCase() + ".jpg"); // Adjust
-            // path
-            JRadioButton planetButton = new JRadioButton(planet.getName(), icon);
+                                                                                                           // path
+            Image img = icon.getImage();
+            Image resizedImg = img.getScaledInstance(100, 100, Image.SCALE_SMOOTH); // Resize the image
+            ImageIcon resizedIcon = new ImageIcon(resizedImg);
+
+            JPanel planetButtonPanel = new JPanel();
+            planetButtonPanel.setLayout(new BorderLayout());
+
+            JRadioButton planetButton = new JRadioButton(resizedIcon);
             planetButton.setActionCommand(String.valueOf(i));
             planetGroup.add(planetButton);
-            planetPanel.add(planetButton);
+
+            JLabel planetLabel = new JLabel(planet.getName(), JLabel.CENTER);
+
+            planetButtonPanel.add(planetButton, BorderLayout.CENTER);
+            planetButtonPanel.add(planetLabel, BorderLayout.SOUTH);
+            planetPanel.add(planetButtonPanel);
         }
 
         JOptionPane.showMessageDialog(this, planetPanel, "Choose your starting planet", JOptionPane.QUESTION_MESSAGE);
@@ -101,6 +156,8 @@ public class GameUI extends JFrame implements ActionListener {
                 "Your character, " + character.getName() + " " + character.getRace() + " from "
                         + character.getStartPlanetName());
 
+        updateStats(character);
+
         updateDisplay();
     }
 
@@ -131,10 +188,8 @@ public class GameUI extends JFrame implements ActionListener {
             optionsPanel.add(button);
         }
 
-        ImageIcon backgroundImage = currentNode.getBackgroundImage();
-
-        if (backgroundImage != null) {
-            backgroundLabel.setIcon(backgroundImage);
+        if (currentNode.getBackgroundImage() != null) {
+            backgroundLabel.setIcon(currentNode.getBackgroundImage());
         } else {
             backgroundLabel.setIcon(null);
         }
