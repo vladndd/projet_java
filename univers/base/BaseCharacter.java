@@ -18,8 +18,13 @@ public class BaseCharacter extends Character {
     }
 
     @Override
-    public void fight() {
-        System.out.println(nom + ": Je ne suis pas le meilleur combattant, mais je vais me défendre !");
+    public void trade(Item item) {
+        this.inventory.put(item.getName(), item);
+    }
+
+    @Override
+    public void fight(int intakeDamage) {
+        this.health -= intakeDamage;
     }
 
 }

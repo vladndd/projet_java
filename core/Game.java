@@ -10,13 +10,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import org.junit.runner.Describable;
-
 public class Game implements Serializable {
     private Node currentNode;
     public static final List<Planet> PLANETS_LIST = new ArrayList<>();
     private List<City> cities = new ArrayList<>();
     private List<Character> characters = new ArrayList<>();
+    private NodeFactory nodeFactory;
 
     public Game() {
         initializePlanets();
@@ -32,24 +31,15 @@ public class Game implements Serializable {
         characters.add(character);
     }
 
+    public Character getCurrentCharacter() {
+        return characters.get(0);
+    }
+
     public void advanceToNode(int nodeId) {
 
         System.out.println("Advancing to node: " + nodeId);
 
-        if (currentNode instanceof Optionable) {
-            List<Node> options = ((Optionable) currentNode).getOptions();
-            for (Node option : options) {
-                if (option.getId() == nodeId) {
-                    currentNode = option;
-                    break;
-                }
-            }
-        } else {
-            Node nextNode = currentNode.chooseNext();
-            if (nextNode.getId() == nodeId) {
-                currentNode = nextNode;
-            }
-        }
+        currentNode = this.nodeFactory.getNode(nodeId);
 
         if (currentNode instanceof TerminalNode) {
             System.out.println("Game over: " + currentNode.getDescription());
@@ -106,6 +96,7 @@ public class Game implements Serializable {
 
     public void createNodePool() throws IOException {
         NodeFactory nodeFactory = new NodeFactory(characters);
+        this.nodeFactory = nodeFactory;
         Map<Integer, Node> nodes = nodeFactory.createNodes("./gameMap.json");
         currentNode = nodes.get(0); // Start at the initial node
     }

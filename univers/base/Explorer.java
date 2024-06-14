@@ -13,7 +13,6 @@ public class Explorer extends Character {
     public void interact() {
         System.out.println(nom + ": Explorons les mystères de cette planète !");
     }
-    
 
     @Override
     public void speak() {
@@ -21,8 +20,13 @@ public class Explorer extends Character {
     }
 
     @Override
-    public void fight() {
+    public void fight(int intakeDamage) {
         System.out.println(nom + ": Je ne suis pas le meilleur combattant, mais je vais me défendre !");
+    }
+
+    @Override
+    public void trade(Item item) {
+        this.inventory.put(item.getName(), item);
     }
 
     public int getIntelligence() {

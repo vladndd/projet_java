@@ -5,6 +5,7 @@ import javax.swing.*;
 import core.Game;
 import representation.BattleNode;
 import representation.ChanceNode;
+import representation.DecisionNode;
 import representation.Node;
 import representation.Optionable;
 import representation.TerminalNode;
@@ -12,6 +13,7 @@ import representation.TradeNode;
 import univers.base.BaseCharacter;
 import univers.base.Planet;
 import univers.base.Race;
+import univers.base.Character;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -86,7 +88,7 @@ public class GameUI extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    private void updateStats(BaseCharacter character) {
+    private void updateStats(Character character) {
         String statsText = "Name: " + character.getName() + "\n" +
                 "Race: " + character.getRace() + "\n" +
                 "Current Planet: " + character.getStartPlanetName() + "\n" +
@@ -185,7 +187,12 @@ public class GameUI extends JFrame implements ActionListener {
             button.setActionCommand(String.valueOf(1));
             button.addActionListener(this);
             optionsPanel.add(button);
-        } else if (currentNode instanceof Optionable) {
+        } else if (currentNode instanceof ChanceNode) {
+            JButton button = new JButton("See whats next..");
+            button.setActionCommand("advance");
+            button.addActionListener(this);
+            optionsPanel.add(button);
+        } else if (currentNode instanceof DecisionNode) {
             System.out.println(currentNode.getDescription());
             List<Node> options = ((Optionable) currentNode).getOptions();
             for (Node option : options) {
@@ -196,31 +203,25 @@ public class GameUI extends JFrame implements ActionListener {
             }
         } else if (currentNode instanceof BattleNode) {
             JButton button = new JButton("Fight " + ((BattleNode) currentNode).getEnemyName());
-            Node next = currentNode.chooseNext();
-            button.setActionCommand(String.valueOf(next.getId()));
+            button.setActionCommand("battle");
             button.addActionListener(this);
             optionsPanel.add(button);
         } else if (currentNode instanceof TradeNode) {
             TradeNode tradeNode = (TradeNode) currentNode;
             for (String item : tradeNode.getItemsForSale()) {
                 JButton button = new JButton("Trade for " + item);
-                Node next = currentNode.chooseNext();
-                button.setActionCommand(String.valueOf(next.getId()));
+                button.setActionCommand("trade_" + item);
                 button.addActionListener(this);
                 optionsPanel.add(button);
             }
-        } else if (currentNode instanceof ChanceNode) {
-            JButton button = new JButton("See whats next..");
-            Node next = currentNode.chooseNext();
-            button.setActionCommand(String.valueOf(next.getId()));
-            button.addActionListener(this);
-            optionsPanel.add(button);
         } else {
             JButton button = new JButton("Continue");
-            button.setActionCommand(String.valueOf(currentNode.checkNext().getId()));
+            button.setActionCommand("advance");
             button.addActionListener(this);
             optionsPanel.add(button);
         }
+
+        updateStats(game.getCurrentCharacter());
 
         if (currentNode.getBackgroundImage() != null) {
             backgroundLabel.setIcon(currentNode.getBackgroundImage());
@@ -234,8 +235,22 @@ public class GameUI extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        int nodeId = Integer.parseInt(e.getActionCommand());
-        game.advanceToNode(nodeId);
+        String command = e.getActionCommand();
+
+        if (command.equals("advance")) {
+            Node nextNode = game.getCurrentNode().chooseNext();
+            game.advanceToNode(nextNode.getId());
+        } else if (command.equals("battle")) {
+            Node nextNode = game.getCurrentNode().chooseNext();
+            game.advanceToNode(nextNode.getId());
+        } else if (command.startsWith("trade_")) {
+            Node nextNode = game.getCurrentNode().chooseNext();
+            game.advanceToNode(nextNode.getId());
+        } else {
+            int nodeId = Integer.parseInt(command);
+            game.advanceToNode(nodeId);
+        }
+
         updateDisplay();
     }
 

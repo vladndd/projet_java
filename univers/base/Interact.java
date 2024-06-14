@@ -6,5 +6,7 @@ public interface Interact {
 
     void interact();
 
-    void fight();
+    void fight(int intakeDamage);
+
+    void trade(Item item);
 }

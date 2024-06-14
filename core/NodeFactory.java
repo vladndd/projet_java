@@ -129,4 +129,8 @@ public class NodeFactory {
             }
         }
     }
+
+    public Node getNode(int id) {
+        return nodeMap.get(id);
+    }
 }

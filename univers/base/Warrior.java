@@ -20,8 +20,13 @@ public class Warrior extends Character {
     }
 
     @Override
-    public void fight() {
+    public void fight(int intakeDamage) {
         System.out.println(nom + ": À l'attaque ! Mon épée est prête.");
+    }
+
+    @Override
+    public void trade(Item item) {
+        this.inventory.put(item.getName(), item);
     }
 
     public int getCombatPower() {

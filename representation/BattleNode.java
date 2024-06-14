@@ -43,16 +43,18 @@ public class BattleNode extends Node {
         // Logic for choosing the next node after the battle
         // Placeholder: assuming battle outcome determines the next node
 
+        System.out.println(this.character.getHealth());
         int enemyAttackYou = this.character.getHealth() - this.enemyAttack;
 
         System.out.println("You have " + enemyAttackYou + " health left.");
 
+        this.character.fight(enemyAttack);
         System.out.println("You have " + this.options);
 
         if (enemyAttackYou <= 0) {
-            return this.options.get(0); // You died
+            return this.options.get(1); // You died
         } else {
-            return this.options.get(1); // You won
+            return this.options.get(0); // You won
         }
     }
 
