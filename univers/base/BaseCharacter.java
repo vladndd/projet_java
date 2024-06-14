@@ -19,7 +19,7 @@ public class BaseCharacter extends Character {
 
     @Override
     public void trade(Item item) {
-        this.inventory.put(item.getName(), item);
+        this.addToInventory(item);
     }
 
     @Override

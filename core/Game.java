@@ -27,6 +27,10 @@ public class Game implements Serializable {
         return currentNode;
     }
 
+    public void updateCurrentPlanet(Planet newPlanet) {
+        getCurrentCharacter().setCurrentPlanet(newPlanet);
+    }
+
     public void addCharacter(Character character) {
         characters.add(character);
     }

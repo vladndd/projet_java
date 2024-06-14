@@ -62,55 +62,64 @@
             "type": "InnerNode",
             "id": 5,
             "description": "You chose to go to Mercury",
-            "nextNodeId": 4
+            "nextNodeId": 4,
+            "backgroundImage": "./images/approaching_planet/mercury.jpg"
         },
         {
             "type": "InnerNode",
             "id": 6,
             "description": "You chose to go to Venus",
-            "nextNodeId": 4
+            "nextNodeId": 4,
+            "backgroundImage": "./images/approaching_planet/venus.jpg"
         },
         {
             "type": "InnerNode",
             "id": 7,
             "description": "You chose to go to Earth",
-            "nextNodeId": 4
+            "nextNodeId": 4,
+            "backgroundImage": "./images/approaching_planet/earth.jpg"
         },
         {
             "type": "InnerNode",
             "id": 8,
             "description": "You chose to go to Mars",
-            "nextNodeId": 4
+            "nextNodeId": 4,
+            "backgroundImage": "./images/approaching_planet/mars.jpg"
         },
         {
             "type": "InnerNode",
             "id": 9,
             "description": "You chose to go to Jupiter",
-            "nextNodeId": 4
+            "nextNodeId": 4,
+            "backgroundImage": "./images/approaching_planet/jupiter.jpg"
         },
         {
             "type": "InnerNode",
             "id": 10,
             "description": "You chose to go to Saturn",
-            "nextNodeId": 4
+            "nextNodeId": 4,
+            "backgroundImage": "./images/approaching_planet/saturn.jpg"
         },
         {
             "type": "InnerNode",
             "id": 11,
             "description": "You chose to go to Uranus",
-            "nextNodeId": 4
+            "nextNodeId": 4,
+            "backgroundImage": "./images/approaching_planet/uranus.jpg"
         },
         {
             "type": "InnerNode",
             "id": 12,
             "description": "You chose to go to Neptune",
-            "nextNodeId": 4
+            "nextNodeId": 4,
+            "backgroundImage": "./images/approaching_planet/neptune.jpg"
         },
         {
             "type": "InnerNode",
             "id": 13,
             "description": "You chose to go to Pluto",
-            "nextNodeId": 4
+            "nextNodeId": 4,
+            "backgroundImage": "./images/approaching_planet/pluto.jpg"
         },
         {
             "type": "ChanceNode",
@@ -120,7 +129,7 @@
                 {
                     "id": 22,
                     "type": "BattleNode",
-                    "description": "You encounter a hostile alien!",
+                    "description": "You encounter a hostile alien! with 50 health and 10 attack! ",
                     "enemyName": "Alien",
                     "enemyHealth": 50,
                     "enemyAttack": 10,
@@ -131,18 +140,19 @@
                     "type": "TradeNode",
                     "description": "A local trader offers you goods.",
                     "itemsForSale": [
-                        "Water",
-                        "Food",
-                        "Weapons"
+                        "Aluminium sword",
+                        "Apple",
+                        "All saints water"
                     ],
                     "characterId": 0
                 }
-            ]
+            ],
+            "backgroundImage": "./images/scene4.jpg"
         },
         {
             "type": "BattleNode",
             "id": 22,
-            "description": "You encounter a hostile alien!",
+            "description": "You encounter a hostile alien! with 50 health and 10 attack! ",
             "enemyName": "Alien",
             "enemyHealth": 50,
             "enemyAttack": 10,
@@ -155,8 +165,13 @@
                 {
                     "id": 25,
                     "description": "You were defeated by the alien."
+                },
+                {
+                    "id": 26,
+                    "description": "You escaped enemy and ran away.."
                 }
-            ]
+            ],
+            "backgroundImage": "./images/scene5.jpg"
         },
         {
             "type": "TradeNode",
@@ -170,10 +185,11 @@
             "characterId": 0,
             "chanceOptions": [
                 {
-                    "id": 26,
+                    "id": 27,
                     "description": "You completed the trade and gained new items."
                 }
-            ]
+            ],
+            "backgroundImage": "./images/scene6.jpg"
         },
         {
             "type": "TerminalNode",
@@ -188,6 +204,11 @@
         {
             "type": "TerminalNode",
             "id": 26,
+            "description": "You escaped enemy and ran away.."
+        },
+        {
+            "type": "TerminalNode",
+            "id": 27,
             "description": "You completed the trade and gained new items."
         }
     ]

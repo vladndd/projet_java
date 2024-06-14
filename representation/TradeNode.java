@@ -28,11 +28,16 @@ public class TradeNode extends Node {
         return itemsForSale;
     }
 
+    public void tradeItem(String itemKey) {
+        // Placeholder: logic for trading
+        // Assuming trade completion determines the next node
+
+        Item item = new Item(itemKey, 5, 10, 20);
+        this.character.trade(item);
+    }
+
     @Override
     public Node chooseNext() {
-
-        Item i = new Item("Test item trade", 10);
-        this.character.trade(i);
         // Logic for choosing the next node after trading
         // Placeholder: assuming trade completion determines the next node
         return this.options.get(0); // Trade completed

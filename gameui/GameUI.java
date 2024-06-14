@@ -89,12 +89,17 @@ public class GameUI extends JFrame implements ActionListener {
     }
 
     private void updateStats(Character character) {
+        StringBuilder inventoryString = new StringBuilder();
+        for (String item : character.getInventory()) {
+            inventoryString.append(item).append("\n");
+        }
+
         String statsText = "Name: " + character.getName() + "\n" +
                 "Race: " + character.getRace() + "\n" +
                 "Current Planet: " + character.getStartPlanetName() + "\n" +
                 "Health: " + character.getHealth() + "\n" +
                 "Force: " + character.getForce() + "\n" +
-                "Inventory: " + character.getInventory();
+                "Inventory: " + (inventoryString.length() > 0 ? inventoryString.toString() : "Empty");
         statsArea.setText(statsText);
     }
 
@@ -193,13 +198,46 @@ public class GameUI extends JFrame implements ActionListener {
             button.addActionListener(this);
             optionsPanel.add(button);
         } else if (currentNode instanceof DecisionNode) {
-            System.out.println(currentNode.getDescription());
             List<Node> options = ((Optionable) currentNode).getOptions();
             for (Node option : options) {
-                JButton button = new JButton(option.getDescription());
-                button.setActionCommand(String.valueOf(option.getId()));
-                button.addActionListener(this);
-                optionsPanel.add(button);
+                boolean isHomePlanet = false;
+
+                switch (option.getId()) {
+                    case 5:
+                        isHomePlanet = this.game.getCurrentCharacter().getStartPlanetName().equals("Mercury");
+                        break;
+                    case 6:
+                        isHomePlanet = this.game.getCurrentCharacter().getStartPlanetName().equals("Venus");
+                        break;
+                    case 7:
+                        isHomePlanet = this.game.getCurrentCharacter().getStartPlanetName().equals("Earth");
+                        break;
+                    case 8:
+                        isHomePlanet = this.game.getCurrentCharacter().getStartPlanetName().equals("Mars");
+                        break;
+                    case 9:
+                        isHomePlanet = this.game.getCurrentCharacter().getStartPlanetName().equals("Jupiter");
+                        break;
+                    case 10:
+                        isHomePlanet = this.game.getCurrentCharacter().getStartPlanetName().equals("Saturn");
+                        break;
+                    case 11:
+                        isHomePlanet = this.game.getCurrentCharacter().getStartPlanetName().equals("Uranus");
+                        break;
+                    case 12:
+                        isHomePlanet = this.game.getCurrentCharacter().getStartPlanetName().equals("Neptune");
+                        break;
+                    case 13:
+                        isHomePlanet = this.game.getCurrentCharacter().getStartPlanetName().equals("Pluto");
+                        break;
+                }
+
+                if (!isHomePlanet) {
+                    JButton button = new JButton(option.getDescription());
+                    button.setActionCommand(String.valueOf(option.getId()));
+                    button.addActionListener(this);
+                    optionsPanel.add(button);
+                }
             }
         } else if (currentNode instanceof BattleNode) {
             JButton button = new JButton("Fight " + ((BattleNode) currentNode).getEnemyName());
@@ -244,10 +282,45 @@ public class GameUI extends JFrame implements ActionListener {
             Node nextNode = game.getCurrentNode().chooseNext();
             game.advanceToNode(nextNode.getId());
         } else if (command.startsWith("trade_")) {
-            Node nextNode = game.getCurrentNode().chooseNext();
+            String itemName = command.substring(6);
+            TradeNode tradeNode = (TradeNode) game.getCurrentNode();
+            tradeNode.tradeItem(itemName);
+            Node nextNode = tradeNode.chooseNext();
             game.advanceToNode(nextNode.getId());
         } else {
             int nodeId = Integer.parseInt(command);
+
+            // Check if it's a decision node and update the planet if necessary
+            switch (nodeId) {
+                case 5:
+                    game.updateCurrentPlanet(new Planet("Mercury", "Very hot planet with no atmosphere."));
+                    break;
+                case 6:
+                    game.updateCurrentPlanet(new Planet("Venus", "Thick atmosphere and volcanic activity."));
+                    break;
+                case 7:
+                    game.updateCurrentPlanet(new Planet("Earth", "Rich in life and diverse climates."));
+                    break;
+                case 8:
+                    game.updateCurrentPlanet(new Planet("Mars", "Red planet with potential for life."));
+                    break;
+                case 9:
+                    game.updateCurrentPlanet(new Planet("Jupiter", "Giant gas planet with a strong magnetic field."));
+                    break;
+                case 10:
+                    game.updateCurrentPlanet(new Planet("Saturn", "Known for its extensive ring system."));
+                    break;
+                case 11:
+                    game.updateCurrentPlanet(new Planet("Uranus", "Ice giant with a tilted axis."));
+                    break;
+                case 12:
+                    game.updateCurrentPlanet(new Planet("Neptune", "Cold blue planet with strong winds."));
+                    break;
+                case 13:
+                    game.updateCurrentPlanet(new Planet("Pluto", "Dwarf planet with a heart-shaped glacier."));
+                    break;
+            }
+
             game.advanceToNode(nodeId);
         }
 

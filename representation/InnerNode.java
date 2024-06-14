@@ -1,11 +1,6 @@
 package representation;
 
-import core.Game;
-import univers.base.City;
 import univers.base.Planet;
-import utility.Utility;
-
-import java.util.List;
 import java.util.Stack;
 
 public class InnerNode extends Node {

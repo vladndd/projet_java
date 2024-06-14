@@ -6,9 +6,14 @@ public class Item {
 
     private int quantity;
 
-    public Item(String name, int quantity) {
+    private int damage;
+    private int price;
+
+    public Item(String name, int quantity, int damage, int price) {
         this.name = name;
         this.quantity = quantity;
+        this.damage = damage;
+        this.price = price;
     }
 
     public String getName() {
@@ -22,4 +27,13 @@ public class Item {
     public void addQuantity(int quantity) {
         this.quantity += quantity;
     }
+
+    public int getDamage() {
+        return this.damage;
+    }
+
+    public int getPrice() {
+        return this.price;
+    }
+
 }

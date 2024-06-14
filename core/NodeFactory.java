@@ -62,22 +62,40 @@ public class NodeFactory {
                 return decisionNode;
 
             case "ChanceNode":
-                return new ChanceNode(id, description);
+
+                ChanceNode chanceNode = new ChanceNode(id, description);
+
+                if (nodeJson.has("backgroundImage")) {
+                    chanceNode.setBackgroundImage(nodeJson.get("backgroundImage").asText());
+                }
+                return chanceNode;
 
             case "BattleNode":
                 String enemyName = nodeJson.get("enemyName").asText();
                 int enemyHealth = nodeJson.get("enemyHealth").asInt();
                 int enemyAttack = nodeJson.get("enemyAttack").asInt();
                 Character character = characters.get(nodeJson.get("characterId").asInt());
-                return new BattleNode(id, description, enemyName, enemyHealth, enemyAttack, character);
+                BattleNode battleNode = new BattleNode(id, description, enemyName, enemyHealth, enemyAttack, character);
 
+                if (nodeJson.has("backgroundImage")) {
+                    battleNode.setBackgroundImage(nodeJson.get("backgroundImage").asText());
+                }
+                return battleNode;
             case "TradeNode":
                 List<String> itemsForSale = new ArrayList<>();
                 for (JsonNode item : nodeJson.get("itemsForSale")) {
                     itemsForSale.add(item.asText());
                 }
                 Character traderCharacter = characters.get(nodeJson.get("characterId").asInt());
-                return new TradeNode(id, description, itemsForSale.toArray(new String[0]), traderCharacter);
+
+                TradeNode tradeNode = new TradeNode(id, description, itemsForSale.toArray(new String[0]),
+                        traderCharacter);
+
+                if (nodeJson.has("backgroundImage")) {
+                    tradeNode.setBackgroundImage(nodeJson.get("backgroundImage").asText());
+                }
+
+                return tradeNode;
 
             case "TerminalNode":
                 return new TerminalNode(id, description);

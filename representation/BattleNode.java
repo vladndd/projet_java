@@ -46,15 +46,20 @@ public class BattleNode extends Node {
         System.out.println(this.character.getHealth());
         int enemyAttackYou = this.character.getHealth() - this.enemyAttack;
 
+        int yourAttackOnEnemy = this.enemyHealth
+                - this.character.getForce() + this.character.getEquipedWeapon().getDamage();
+
         System.out.println("You have " + enemyAttackYou + " health left.");
 
         this.character.fight(enemyAttack);
         System.out.println("You have " + this.options);
 
-        if (enemyAttackYou <= 0) {
+        if (yourAttackOnEnemy <= 0) {
+            return this.options.get(0); // You won and killed the enemy
+        } else if (enemyAttackYou <= 0) {
             return this.options.get(1); // You died
         } else {
-            return this.options.get(0); // You won
+            return this.options.get(2); // You escaped
         }
     }
 
