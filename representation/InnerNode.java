@@ -22,14 +22,6 @@ public class InnerNode extends Node {
 
     }
 
-    public InnerNode(int id, String description, boolean planetSelector, boolean citySelector) {
-        super(id, description);
-        this.nextNodes = new Stack<>();
-
-        this.planetSelector = planetSelector;
-        this.citySelector = citySelector;
-    }
-
     public boolean isPlanetSelector() {
         return planetSelector;
     }
@@ -68,33 +60,6 @@ public class InnerNode extends Node {
 
     public Planet getPlanet() {
         return planet;
-    }
-
-    public City chooseCity(Planet planet) {
-        List<City> cities = planet.getCities();
-        for (int i = 0; i < cities.size(); i++) {
-            System.out.println(i + 1 + ". " + cities.get(i).getName());
-        }
-
-        int choice = Utility.scanner.nextInt();
-
-        // Scanner sc = new Scanner(System.in);
-
-        return cities.get(choice - 1);
-    }
-
-    public Planet choosePlanet() {
-        List<Planet> planets = Game.PLANETS_LIST;
-
-        for (int i = 0; i < planets.size(); i++) {
-            System.out.println(i + 1 + ". " + planets.get(i).getName());
-        }
-
-        int choice = Utility.scanner.nextInt();
-
-        // Scanner sc = new Scanner(System.in);
-
-        return planets.get(choice - 1);
     }
 
 }

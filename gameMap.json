@@ -1,0 +1,194 @@
+{
+    "nodes": [
+        {
+            "type": "InnerNode",
+            "id": 0,
+            "description": "Your home planet is being invaded.",
+            "backgroundImage": "./images/scene1.jpg",
+            "nextNodeId": 1
+        },
+        {
+            "type": "InnerNode",
+            "id": 1,
+            "description": "You managed to escape to open space to seek new adventures...",
+            "backgroundImage": "./images/scene2.jpg",
+            "nextNodeId": 3
+        },
+        {
+            "type": "DecisionNode",
+            "id": 3,
+            "description": "You stand upon the choice of which planet to go to..",
+            "backgroundImage": "./images/scene3.jpg",
+            "options": [
+                {
+                    "id": 5,
+                    "description": "You chose to go to Mercury"
+                },
+                {
+                    "id": 6,
+                    "description": "You chose to go to Venus"
+                },
+                {
+                    "id": 7,
+                    "description": "You chose to go to Earth"
+                },
+                {
+                    "id": 8,
+                    "description": "You chose to go to Mars"
+                },
+                {
+                    "id": 9,
+                    "description": "You chose to go to Jupiter"
+                },
+                {
+                    "id": 10,
+                    "description": "You chose to go to Saturn"
+                },
+                {
+                    "id": 11,
+                    "description": "You chose to go to Uranus"
+                },
+                {
+                    "id": 12,
+                    "description": "You chose to go to Neptune"
+                },
+                {
+                    "id": 13,
+                    "description": "You chose to go to Pluto"
+                }
+            ]
+        },
+        {
+            "type": "InnerNode",
+            "id": 5,
+            "description": "You chose to go to Mercury",
+            "nextNodeId": 4
+        },
+        {
+            "type": "InnerNode",
+            "id": 6,
+            "description": "You chose to go to Venus",
+            "nextNodeId": 4
+        },
+        {
+            "type": "InnerNode",
+            "id": 7,
+            "description": "You chose to go to Earth",
+            "nextNodeId": 4
+        },
+        {
+            "type": "InnerNode",
+            "id": 8,
+            "description": "You chose to go to Mars",
+            "nextNodeId": 4
+        },
+        {
+            "type": "InnerNode",
+            "id": 9,
+            "description": "You chose to go to Jupiter",
+            "nextNodeId": 4
+        },
+        {
+            "type": "InnerNode",
+            "id": 10,
+            "description": "You chose to go to Saturn",
+            "nextNodeId": 4
+        },
+        {
+            "type": "InnerNode",
+            "id": 11,
+            "description": "You chose to go to Uranus",
+            "nextNodeId": 4
+        },
+        {
+            "type": "InnerNode",
+            "id": 12,
+            "description": "You chose to go to Neptune",
+            "nextNodeId": 4
+        },
+        {
+            "type": "InnerNode",
+            "id": 13,
+            "description": "You chose to go to Pluto",
+            "nextNodeId": 4
+        },
+        {
+            "type": "ChanceNode",
+            "id": 4,
+            "description": "You are settled down on your new planet, exhausted and without food",
+            "outcomes": [
+                {
+                    "id": 22,
+                    "type": "BattleNode",
+                    "description": "You encounter a hostile alien!",
+                    "enemyName": "Alien",
+                    "enemyHealth": 50,
+                    "enemyAttack": 10,
+                    "characterId": 0
+                },
+                {
+                    "id": 23,
+                    "type": "TradeNode",
+                    "description": "A local trader offers you goods.",
+                    "itemsForSale": [
+                        "Water",
+                        "Food",
+                        "Weapons"
+                    ],
+                    "characterId": 0
+                }
+            ]
+        },
+        {
+            "type": "BattleNode",
+            "id": 22,
+            "description": "You encounter a hostile alien!",
+            "enemyName": "Alien",
+            "enemyHealth": 50,
+            "enemyAttack": 10,
+            "characterId": 0,
+            "chanceOptions": [
+                {
+                    "id": 24,
+                    "description": "You defeated the alien and found some resources."
+                },
+                {
+                    "id": 25,
+                    "description": "You were defeated by the alien."
+                }
+            ]
+        },
+        {
+            "type": "TradeNode",
+            "id": 23,
+            "description": "A local trader offers you goods.",
+            "itemsForSale": [
+                "Water",
+                "Food",
+                "Weapons"
+            ],
+            "characterId": 0,
+            "chanceOptions": [
+                {
+                    "id": 26,
+                    "description": "You completed the trade and gained new items."
+                }
+            ]
+        },
+        {
+            "type": "TerminalNode",
+            "id": 24,
+            "description": "You defeated the alien and found some resources."
+        },
+        {
+            "type": "TerminalNode",
+            "id": 25,
+            "description": "You were defeated by the alien."
+        },
+        {
+            "type": "TerminalNode",
+            "id": 26,
+            "description": "You completed the trade and gained new items."
+        }
+    ]
+}

@@ -3,9 +3,12 @@ package gameui;
 import javax.swing.*;
 
 import core.Game;
+import representation.BattleNode;
+import representation.ChanceNode;
 import representation.Node;
 import representation.Optionable;
 import representation.TerminalNode;
+import representation.TradeNode;
 import univers.base.BaseCharacter;
 import univers.base.Planet;
 import univers.base.Race;
@@ -13,6 +16,7 @@ import univers.base.Race;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.List;
 
 public class GameUI extends JFrame implements ActionListener {
@@ -158,6 +162,14 @@ public class GameUI extends JFrame implements ActionListener {
 
         updateStats(character);
 
+        try {
+            game.createNodePool();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            System.out.println("Error creating node pool");
+            e.printStackTrace();
+        }
+
         updateDisplay();
     }
 
@@ -174,6 +186,7 @@ public class GameUI extends JFrame implements ActionListener {
             button.addActionListener(this);
             optionsPanel.add(button);
         } else if (currentNode instanceof Optionable) {
+            System.out.println(currentNode.getDescription());
             List<Node> options = ((Optionable) currentNode).getOptions();
             for (Node option : options) {
                 JButton button = new JButton(option.getDescription());
@@ -181,6 +194,27 @@ public class GameUI extends JFrame implements ActionListener {
                 button.addActionListener(this);
                 optionsPanel.add(button);
             }
+        } else if (currentNode instanceof BattleNode) {
+            JButton button = new JButton("Fight " + ((BattleNode) currentNode).getEnemyName());
+            Node next = currentNode.chooseNext();
+            button.setActionCommand(String.valueOf(next.getId()));
+            button.addActionListener(this);
+            optionsPanel.add(button);
+        } else if (currentNode instanceof TradeNode) {
+            TradeNode tradeNode = (TradeNode) currentNode;
+            for (String item : tradeNode.getItemsForSale()) {
+                JButton button = new JButton("Trade for " + item);
+                Node next = currentNode.chooseNext();
+                button.setActionCommand(String.valueOf(next.getId()));
+                button.addActionListener(this);
+                optionsPanel.add(button);
+            }
+        } else if (currentNode instanceof ChanceNode) {
+            JButton button = new JButton("See whats next..");
+            Node next = currentNode.chooseNext();
+            button.setActionCommand(String.valueOf(next.getId()));
+            button.addActionListener(this);
+            optionsPanel.add(button);
         } else {
             JButton button = new JButton("Continue");
             button.setActionCommand(String.valueOf(currentNode.checkNext().getId()));

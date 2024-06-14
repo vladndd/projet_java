@@ -3,17 +3,14 @@ package core;
 import representation.*;
 import univers.base.*;
 import univers.base.Character;
-import utility.Utility;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
+import org.junit.runner.Describable;
 
 public class Game implements Serializable {
     private Node currentNode;
@@ -21,20 +18,10 @@ public class Game implements Serializable {
     private List<City> cities = new ArrayList<>();
     private List<Character> characters = new ArrayList<>();
 
-    private Random random = new Random();
-    private List<ChanceNode> randomEvents = new ArrayList<>();
-
-    private Planet currentPlanet;
-    private City currentCity;
-
-    private Set<Planet> visitedPlanets = new HashSet<>();
-    private Set<City> visitedCities = new HashSet<>();
-
     public Game() {
         initializePlanets();
         initializeCitiesOnPlanets();
         initializeBosses();
-        createNodePool();
     }
 
     public Node getCurrentNode() {
@@ -69,79 +56,6 @@ public class Game implements Serializable {
         }
     }
 
-    // private Node randomEvent() {
-    // return randomEvents.get(random.nextInt(randomEvents.size()));
-    // }
-
-    // private int getValidInput(String prompt, int max) {
-    // int choice = 0;
-    // do {
-    // String input = JOptionPane.showInputDialog(prompt);
-    // try {
-    // choice = Integer.parseInt(input);
-    // if (choice < 1 || choice > max) {
-    // JOptionPane.showMessageDialog(null, "Invalid choice. Please try again.");
-    // }
-    // } catch (NumberFormatException e) {
-    // JOptionPane.showMessageDialog(null, "Please enter a number.");
-    // }
-    // } while (choice < 1 || choice > max);
-    // return choice;
-    // }
-
-    // public void play() {
-    // while (!(currentNode instanceof TerminalNode)) {
-    // currentNode.display();
-
-    // if (currentNode instanceof DecisionNode || currentNode instanceof InnerNode)
-    // {
-
-    // Node node = currentNode;
-    // // Random event with 50% chance
-    // // if (random.nextBoolean()) {
-    // // if (!randomEvents.isEmpty()) {
-    // // Node randomEvent = randomEvent();
-    // // randomEvent.display();
-    // // Node outcome = randomEvent.chooseNext();
-
-    // // outcome.display();
-    // // }
-    // // }
-
-    // if (currentNode instanceof InnerNode) {
-    // InnerNode innerNode = (InnerNode) currentNode;
-    // if (innerNode.isPlanetSelector()) {
-    // Planet planet = innerNode.choosePlanet();
-    // currentPlanet = planet;
-    // visitedPlanets.add(planet);
-
-    // }
-
-    // if (innerNode.isCitySelector()) {
-    // City city = innerNode.chooseCity(this.currentPlanet);
-    // currentCity = city;
-    // visitedCities.add(city);
-    // }
-    // }
-
-    // currentNode = node.chooseNext();
-
-    // if (visitedPlanets.containsAll(PLANETS_LIST) &&
-    // visitedCities.containsAll(cities)) {
-    // System.out.println("You have explored all planets and cities!");
-    // currentNode = new TerminalNode(99, "Congratulations! You have explored the
-    // entire galaxy!");
-    // }
-
-    // if (currentNode instanceof TerminalNode) {
-    // currentNode.display();
-    // break;
-    // }
-
-    // }
-    // }
-    // }
-
     public void saveGame(String filename) throws IOException {
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename));
         out.writeObject(this);
@@ -168,7 +82,6 @@ public class Game implements Serializable {
     }
 
     private void initializeBosses() {
-        // Initialize bosses here
         for (City city : cities) {
             int numBosses = new Random().nextInt(2) + 1;
             for (int i = 0; i < numBosses; i++) {
@@ -191,37 +104,9 @@ public class Game implements Serializable {
         }
     }
 
-    // TODO: ADD RANDOM MAP GENERATION, ADD NODE TYPES (ATTACK , TRADE ETC..)
-
-    private List<Node> createNodePool() {
-        List<Node> nodePool = new ArrayList<>();
-
-        // Create decision nodes based on event names and descriptions
-        InnerNode innerNode0 = new InnerNode(0, "Your home planet is being invaded.");
-
-        innerNode0
-                .setBackgroundImage("./images/scene1.jpg");
-
-        InnerNode innerNode1 = new InnerNode(1, "You managed to escape to open space to seek new adventures...");
-
-        // Adding options to decision nodes logically
-        innerNode0.addNextNode(innerNode1); // Escape to space
-
-        InnerNode planetNode = new InnerNode(3, "You stand upon the choice of which planet to go to..", true, false);
-
-        innerNode1.addNextNode(planetNode);
-
-        // Add HP and other locators, possibility to check inventory, etc.
-        DecisionNode settledDecision = new DecisionNode(4,
-                "You are settled down on your new planet, exhausted and without food. What are you going to do?");
-
-        planetNode.addNextNode(settledDecision);
-
-        settledDecision.addOption(new TerminalNode(5, "You have decided to explore the planet."));
-        settledDecision.addOption(new TerminalNode(6, "You have decided to trade with the locals."));
-        settledDecision.addOption(new TerminalNode(7, "You have decided to attack the locals."));
-
-        this.currentNode = innerNode0;
-        return nodePool;
+    public void createNodePool() throws IOException {
+        NodeFactory nodeFactory = new NodeFactory(characters);
+        Map<Integer, Node> nodes = nodeFactory.createNodes("./gameMap.json");
+        currentNode = nodes.get(0); // Start at the initial node
     }
 }
