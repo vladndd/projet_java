@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+// ADD 20 NODES, POSSIBLITY TO CHANGE WEAPON, SOUND , JAVADOC AND TESTS?
+
 public class Game implements Serializable {
     private Node currentNode;
     public static final List<Planet> PLANETS_LIST = new ArrayList<>();

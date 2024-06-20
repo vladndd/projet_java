@@ -13,8 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// fix multiple click error of Chance node 
-
 public class NodeFactory {
     private Map<Integer, Node> nodeMap = new HashMap<>();
     private List<Character> characters;
@@ -96,7 +94,6 @@ public class NodeFactory {
                 }
 
                 return tradeNode;
-
             case "TerminalNode":
                 return new TerminalNode(id, description);
 
