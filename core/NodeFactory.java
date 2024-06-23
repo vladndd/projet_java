@@ -95,7 +95,11 @@ public class NodeFactory {
 
                 return tradeNode;
             case "TerminalNode":
-                return new TerminalNode(id, description);
+                TerminalNode terminalNode = new TerminalNode(id, description);
+                if (nodeJson.has("backgroundImage")) {
+                    terminalNode.setBackgroundImage(nodeJson.get("backgroundImage").asText());
+                }
+                return terminalNode;
 
             default:
                 throw new IllegalArgumentException("Unknown node type: " + type);
