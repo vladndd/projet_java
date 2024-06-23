@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import representation.*;
 
 import univers.base.Character;
+import univers.base.Item;
 
 import java.io.File;
 import java.io.IOException;
@@ -80,13 +81,18 @@ public class NodeFactory {
                 }
                 return battleNode;
             case "TradeNode":
-                List<String> itemsForSale = new ArrayList<>();
-                for (JsonNode item : nodeJson.get("itemsForSale")) {
-                    itemsForSale.add(item.asText());
-                }
-                Character traderCharacter = characters.get(nodeJson.get("characterId").asInt());
+                List<Item> itemsForSale = new ArrayList<>();
 
-                TradeNode tradeNode = new TradeNode(id, description, itemsForSale.toArray(new String[0]),
+                Character traderCharacter = characters.get(nodeJson.get("characterId").asInt());
+                for (JsonNode itemJson : nodeJson.get("itemsForSale")) {
+                    String itemName = itemJson.get("name").asText();
+                    int itemPrice = itemJson.get("price").asInt();
+                    int itemWeight = itemJson.get("weight").asInt();
+                    int itemHealth = itemJson.get("health").asInt();
+                    int itemAttack = itemJson.get("attack").asInt();
+                    itemsForSale.add(new Item(itemName, itemPrice, itemWeight, itemHealth, itemAttack, 1));
+                }
+                TradeNode tradeNode = new TradeNode(id, description, itemsForSale,
                         traderCharacter);
 
                 if (nodeJson.has("backgroundImage")) {

@@ -6,8 +6,6 @@ public class City {
 
     private Planet planet;
 
-    private Enemy boss;
-
     public City(String name, Planet planet) {
         this.name = name;
         this.planet = planet;
@@ -21,7 +19,4 @@ public class City {
         return planet;
     }
 
-    public void setBoss(Enemy boss) {
-        this.boss = boss;
-    }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-// ADD 20 NODES, POSSIBLITY TO CHANGE WEAPON, SOUND , JAVADOC AND TESTS?
+// ADD CLASS CHOOSE + ATTRIBUTES, SAVE-LOAD SOUND , JAVADOC AND TESTS?
 
 public class Game implements Serializable {
     private Node currentNode;
@@ -22,7 +22,6 @@ public class Game implements Serializable {
     public Game() {
         initializePlanets();
         initializeCitiesOnPlanets();
-        initializeBosses();
     }
 
     public Node getCurrentNode() {
@@ -35,6 +34,11 @@ public class Game implements Serializable {
 
     public void addCharacter(Character character) {
         characters.add(character);
+    }
+
+    public void setCharacter(Character character) {
+        this.characters.remove(0);
+        this.characters.add(character);
     }
 
     public Character getCurrentCharacter() {
@@ -75,17 +79,6 @@ public class Game implements Serializable {
         PLANETS_LIST.add(new Planet("Uranus", "Ice giant with a tilted axis."));
         PLANETS_LIST.add(new Planet("Neptune", "Cold blue planet with strong winds."));
         PLANETS_LIST.add(new Planet("Pluto", "Dwarf planet with a heart-shaped glacier."));
-    }
-
-    private void initializeBosses() {
-        for (City city : cities) {
-            int numBosses = new Random().nextInt(2) + 1;
-            for (int i = 0; i < numBosses; i++) {
-                String bossName = city.getPlanet() + " Boss " + (i + 1);
-                Enemy boss = new Enemy(bossName, 100, 20, true);
-                city.setBoss(boss);
-            }
-        }
     }
 
     private void initializeCitiesOnPlanets() {

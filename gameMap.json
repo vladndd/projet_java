@@ -16,6 +16,47 @@
         },
         {
             "type": "DecisionNode",
+            "id": 99,
+            "description": "Its time to choose your character type",
+            "backgroundImage": "./images/scene3.jpg",
+            "outcomes": [
+                {
+                    "id": 100,
+                    "type": "InnerNode",
+                    "description": "You chose to be a warrior"
+                },
+                {
+                    "id": 101,
+                    "type": "InnerNode",
+                    "description": "You chose to be a assasin"
+                },
+                {
+                    "id": 102,
+                    "type": "InnerNode",
+                    "description": "You chose to be a explorer"
+                }
+            ]
+        },
+        {
+            "type": "CharacterNode",
+            "id": 100,
+            "description": "You chose to be a warrior",
+            "nextNodeId": 3
+        },
+        {
+            "type": "CharacterNode",
+            "id": 101,
+            "description": "You chose to be a assasin",
+            "nextNodeId": 3
+        },
+        {
+            "type": "CharacterNode",
+            "id": 102,
+            "description": "You chose to be a explorer",
+            "nextNodeId": 3
+        },
+        {
+            "type": "DecisionNode",
             "id": 3,
             "description": "You stand upon the choice of which planet to go to..",
             "backgroundImage": "./images/scene3.jpg",
@@ -140,9 +181,27 @@
                     "type": "TradeNode",
                     "description": "A local trader offers you goods.",
                     "itemsForSale": [
-                        "Aluminium sword",
-                        "Apple",
-                        "All saints water"
+                        {
+                            "name": "Aluminium sword",
+                            "price": 40,
+                            "weight": 5,
+                            "attack": 20,
+                            "health": 30
+                        },
+                        {
+                            "name": "Apple",
+                            "price": 10,
+                            "weight": 1,
+                            "health": 10,
+                            "attack": 4
+                        },
+                        {
+                            "name": "All saints water",
+                            "price": 50,
+                            "weight": 2,
+                            "health": 50,
+                            "attack": 20
+                        }
                     ],
                     "characterId": 0
                 }
@@ -178,9 +237,20 @@
             "id": 23,
             "description": "A local trader offers you goods.",
             "itemsForSale": [
-                "Water",
-                "Food",
-                "Weapons"
+                {
+                    "name": "Boots",
+                    "price": 14,
+                    "weight": 5,
+                    "attack": 10,
+                    "health": 20
+                },
+                {
+                    "name": "Banana",
+                    "price": 60,
+                    "weight": 1,
+                    "health": 40,
+                    "attack": 10
+                }
             ],
             "characterId": 0,
             "chanceOptions": [
@@ -292,9 +362,27 @@
             "type": "TradeNode",
             "description": "You trade with the aliens and gain valuable resources.",
             "itemsForSale": [
-                "Energy crystals",
-                "Alien fruit",
-                "Advanced tools"
+                {
+                    "name": "Energy crystals",
+                    "price": 70,
+                    "weight": 105,
+                    "attack": 80,
+                    "health": 10
+                },
+                {
+                    "name": "Alien fruit",
+                    "price": 74,
+                    "weight": 1,
+                    "health": 50,
+                    "attack": 20
+                },
+                {
+                    "name": "Advanced tools",
+                    "price": 30,
+                    "weight": 20,
+                    "health": 50,
+                    "attack": 30
+                }
             ],
             "characterId": 0,
             "chanceOptions": [

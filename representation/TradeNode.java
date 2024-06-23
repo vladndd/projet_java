@@ -7,11 +7,11 @@ import univers.base.Character;
 import univers.base.Item;
 
 public class TradeNode extends Node {
-    private String[] itemsForSale;
+    private List<Item> itemsForSale;
     private List<Node> options;
     private Character character;
 
-    public TradeNode(int id, String description, String[] itemsForSale, Character character) {
+    public TradeNode(int id, String description, List<Item> itemsForSale, Character character) {
         super(id, description);
         this.itemsForSale = itemsForSale;
         this.options = new ArrayList<>();
@@ -24,16 +24,25 @@ public class TradeNode extends Node {
         this.options.add(node);
     }
 
-    public String[] getItemsForSale() {
+    public List<Item> getItemsForSale() {
         return itemsForSale;
     }
 
     public void tradeItem(String itemKey) {
-        // Placeholder: logic for trading
-        // Assuming trade completion determines the next node
+        Item itemToTrade = null;
+        for (Item item : itemsForSale) {
+            if (item.getName().equals(itemKey)) {
+                itemToTrade = item;
+                break;
+            }
+        }
 
-        Item item = new Item(itemKey, 5, 10, 20);
-        this.character.trade(item);
+        if (itemToTrade != null && character.hasEnoughMoney(itemToTrade.getPrice())) {
+            character.trade(itemToTrade);
+            character.decreaseMoney(itemToTrade.getPrice());
+        } else {
+            System.out.println("Not enough money or item not found");
+        }
     }
 
     @Override

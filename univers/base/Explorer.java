@@ -21,15 +21,24 @@ public class Explorer extends Character {
 
     @Override
     public void fight(int intakeDamage) {
-        System.out.println(nom + ": Je ne suis pas le meilleur combattant, mais je vais me défendre !");
+        this.health -= intakeDamage;
     }
 
     @Override
     public void trade(Item item) {
-        this.inventory.put(item.getName(), item);
+        this.addToInventory(item);
     }
 
     public int getIntelligence() {
         return intelligence;
+    }
+
+    public String getSpecificAttribute() {
+        return "Intelligence: " + this.intelligence;
+    }
+
+    @Override
+    public int specificDamage() {
+        return this.intelligence;
     }
 }

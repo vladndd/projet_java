@@ -27,4 +27,13 @@ public class BaseCharacter extends Character {
         this.health -= intakeDamage;
     }
 
+    public String getSpecificAttribute() {
+        return "No specific attribute";
+    }
+
+    @Override
+    public int specificDamage() {
+        return 0;
+    }
+
 }

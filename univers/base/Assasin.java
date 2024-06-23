@@ -1,12 +1,12 @@
 package univers.base;
 
 // sub classes add one specific attribute to your character
-public class Warrior extends Character {
-    private int combatPower;
+public class Assasin extends Character {
+    private int agileDamage;
 
-    public Warrior(String nom, int health, int force, Race race, int combatPower, Planet planet) {
+    public Assasin(String nom, int health, int force, Race race, int agileDamage, Planet planet) {
         super(nom, health, force, race, planet);
-        this.combatPower = combatPower;
+        this.agileDamage = agileDamage;
     }
 
     @Override
@@ -29,16 +29,13 @@ public class Warrior extends Character {
         this.addToInventory(item);
     }
 
-    public int getCombatPower() {
-        return combatPower;
-    }
-
     public String getSpecificAttribute() {
-        return "Combat Power: " + this.combatPower;
+        return "Agile Damage: " + this.agileDamage;
     }
 
     @Override
     public int specificDamage() {
-        return this.combatPower;
+        return this.agileDamage;
     }
+
 }

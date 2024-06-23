@@ -2,6 +2,8 @@ package univers.base;
 
 import java.util.HashMap;
 
+import javax.swing.JOptionPane;
+
 public abstract class Character implements Interact {
     protected String nom;
     protected int health;
@@ -9,6 +11,9 @@ public abstract class Character implements Interact {
     protected Race race;
     protected Planet planet;
     protected Item equipedWeapon;
+    protected int money;
+    protected int maxweight;
+    protected String characterType;
 
     protected HashMap<String, Item> inventory = new HashMap<>();
 
@@ -18,9 +23,11 @@ public abstract class Character implements Interact {
         this.force = force + race.getForceBonus();
         this.race = race;
         this.planet = planet;
-        this.equipedWeapon = new Item("Sword", 5, 10, 60);
+        this.equipedWeapon = new Item("Sword", 5, 10, 0, 50, 1);
+        this.money = 100; // for all characters
+        this.maxweight = 100; // for all characters
 
-        this.inventory.put("Weapon", this.equipedWeapon);
+        // this.inventory.put("Weapon", this.equipedWeapon);
     }
 
     // Define the methods declared in the Interact interface
@@ -32,17 +39,27 @@ public abstract class Character implements Interact {
 
     public abstract void fight(int intakeDamage);
 
+    public abstract String getSpecificAttribute();
+
+    public abstract int specificDamage();
+
     public String[] getInventory() {
         String[] inventoryArray = new String[inventory.size()];
         int i = 0;
         for (Item item : inventory.values()) {
-            inventoryArray[i++] = "Name: " + item.getName() + ", Damage: " + item.getDamage() +
-                    ", Price: " + item.getPrice() + ", Quantity: " + item.getQuantity();
+            inventoryArray[i++] = "Name: " + item.getName() + ", Attack: " + item.getAttack() +
+                    ", Price: " + item.getPrice() + ", Health: " + item.getHealth() + ", Quantity: "
+                    + item.getQuantity() + ", Weight: " + item.getWeight();
         }
         return inventoryArray;
     }
 
     public void addToInventory(Item item) {
+
+        if (item.getWeight() + this.getCurrentWeight() > maxweight) {
+            JOptionPane.showMessageDialog(null, "Item is too heavy to carry", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         if (inventory.containsKey(item.getName())) {
             inventory.get(item.getName()).addQuantity(item.getQuantity());
         } else {
@@ -50,12 +67,40 @@ public abstract class Character implements Interact {
         }
     }
 
+    public int getCurrentWeight() {
+        int currentWeight = 0;
+        for (Item item : inventory.values()) {
+            currentWeight += item.getWeight() * item.getQuantity();
+        }
+        return currentWeight;
+    }
+
+    public String getCharacteType() {
+        return characterType;
+    }
+
+    public void setCharacterType(String characterType) {
+        this.characterType = characterType;
+    }
+
     public int getHealth() {
-        return health;
+        return health + this.equipedWeapon.getHealth();
     }
 
     public int getForce() {
-        return force;
+        return force + this.equipedWeapon.getAttack() + this.specificDamage();
+    }
+
+    public void decreaseMoney(int amount) {
+        money -= amount;
+    }
+
+    public boolean hasEnoughMoney(int amount) {
+        return money >= amount;
+    }
+
+    public int getMoney() {
+        return money;
     }
 
     public Race getRace() {
@@ -84,5 +129,29 @@ public abstract class Character implements Interact {
 
     public Item getEquipedWeapon() {
         return equipedWeapon;
+    }
+
+    public void equipItem(String itemName) {
+        Item item = inventory.get(itemName);
+        if (item != null) {
+            Item equippedItem = this.getEquipedWeapon();
+            if (equippedItem != null) {
+                equippedItem.setEquipped(false);
+                this.inventory.put(equippedItem.getName(), equippedItem);
+            }
+
+            item.setEquipped(true);
+            setEquipedWeapon(item);
+            this.inventory.remove(itemName);
+        }
+    }
+
+    public void unequipItem() {
+        if (this.getEquipedWeapon() != null) {
+            this.getEquipedWeapon().setEquipped(false);
+            this.inventory.put(this.getEquipedWeapon().getName(), this.getEquipedWeapon());
+            setEquipedWeapon(null);
+
+        }
     }
 }
