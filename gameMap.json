@@ -129,7 +129,7 @@
                 {
                     "id": 22,
                     "type": "BattleNode",
-                    "description": "You encounter a hostile alien! with 50 health and 10 attack! ",
+                    "description": "You encounter a hostile alien with 50 health and 10 attack!",
                     "enemyName": "Alien",
                     "enemyHealth": 50,
                     "enemyAttack": 10,
@@ -152,7 +152,7 @@
         {
             "type": "BattleNode",
             "id": 22,
-            "description": "You encounter a hostile alien! with 50 health and 10 attack! ",
+            "description": "You encounter a hostile alien with 50 health and 10 attack!",
             "enemyName": "Alien",
             "enemyHealth": 50,
             "enemyAttack": 10,
@@ -168,7 +168,7 @@
                 },
                 {
                     "id": 26,
-                    "description": "You escaped enemy and ran away.."
+                    "description": "You escaped the enemy and ran away."
                 }
             ],
             "backgroundImage": "./images/scene5.jpg"
@@ -185,31 +185,217 @@
             "characterId": 0,
             "chanceOptions": [
                 {
-                    "id": 27,
-                    "description": "You completed the trade and gained new items."
+                    "id": 28,
+                    "description": "You explore the new planet and find a hidden cave."
                 }
             ],
             "backgroundImage": "./images/scene6.jpg"
         },
         {
-            "type": "TerminalNode",
+            "type": "InnerNode",
             "id": 24,
-            "description": "You defeated the alien and found some resources."
+            "description": "You defeated the alien and found some resources. You continue your journey...",
+            "nextNodeId": 28,
+            "backgroundImage": "./images/scene18.jpg"
+        },
+        {
+            "type": "InnerNode",
+            "id": 26,
+            "description": "You escaped the enemy and ran away. You continue your journey...",
+            "nextNodeId": 28,
+            "backgroundImage": "./images/scene19.jpg"
         },
         {
             "type": "TerminalNode",
             "id": 25,
-            "description": "You were defeated by the alien."
+            "description": "You were defeated by the alien.",
+            "backgroundImage": "./images/scene20.jpg"
+        },
+        {
+            "type": "InnerNode",
+            "id": 28,
+            "description": "You explore the new planet and find a hidden cave.",
+            "nextNodeId": 29,
+            "backgroundImage": "./images/scene7.jpg"
+        },
+        {
+            "type": "DecisionNode",
+            "id": 29,
+            "description": "Do you want to enter the cave?",
+            "backgroundImage": "./images/scene8.jpg",
+            "options": [
+                {
+                    "id": 30,
+                    "description": "Yes, enter the cave."
+                },
+                {
+                    "id": 31,
+                    "description": "No, continue exploring the planet."
+                }
+            ]
+        },
+        {
+            "type": "InnerNode",
+            "id": 30,
+            "description": "You enter the cave and find ancient alien technology.",
+            "nextNodeId": 32,
+            "backgroundImage": "./images/scene9.jpg"
+        },
+        {
+            "type": "InnerNode",
+            "id": 31,
+            "description": "You continue exploring the planet and find a friendly alien village.",
+            "nextNodeId": 33,
+            "backgroundImage": "./images/scene10.jpg"
+        },
+        {
+            "type": "InnerNode",
+            "id": 32,
+            "description": "The ancient alien technology grants you advanced knowledge.",
+            "nextNodeId": 34,
+            "backgroundImage": "./images/scene11.jpg"
+        },
+        {
+            "type": "ChanceNode",
+            "id": 33,
+            "description": "The friendly aliens offer you food and shelter.",
+            "outcomes": [
+                {
+                    "id": 35,
+                    "type": "TradeNode",
+                    "description": "You trade with the aliens and gain valuable resources.",
+                    "itemsForSale": [
+                        "Energy crystals",
+                        "Alien fruit",
+                        "Advanced tools"
+                    ],
+                    "characterId": 0,
+                    "chanceOptions": [
+                        {
+                            "id": 34,
+                            "description": "With the new knowledge and resources, you prepare for future adventures."
+                        }
+                    ]
+                },
+                {
+                    "id": 36,
+                    "type": "InnerNode",
+                    "description": "The aliens teach you about their culture and technology.",
+                    "nextNodeId": 34,
+                    "backgroundImage": "./images/scene12.jpg"
+                }
+            ],
+            "backgroundImage": "./images/scene121.jpg"
+        },
+        {
+            "id": 35,
+            "type": "TradeNode",
+            "description": "You trade with the aliens and gain valuable resources.",
+            "itemsForSale": [
+                "Energy crystals",
+                "Alien fruit",
+                "Advanced tools"
+            ],
+            "characterId": 0,
+            "chanceOptions": [
+                {
+                    "id": 34,
+                    "description": "With the new knowledge and resources, you prepare for future adventures."
+                }
+            ],
+            "backgroundImage": "./images/scene122.jpg"
+        },
+        {
+            "id": 36,
+            "type": "InnerNode",
+            "description": "The aliens teach you about their culture and technology.",
+            "nextNodeId": 34,
+            "backgroundImage": "./images/scene12.jpg"
+        },
+        {
+            "type": "InnerNode",
+            "id": 34,
+            "description": "With the new knowledge and resources, you prepare for future adventures.",
+            "nextNodeId": 37,
+            "backgroundImage": "./images/scene13.jpg"
+        },
+        {
+            "type": "DecisionNode",
+            "id": 37,
+            "description": "Do you want to explore another planet or establish a base here?",
+            "backgroundImage": "./images/scene14.jpg",
+            "options": [
+                {
+                    "id": 38,
+                    "description": "Explore another planet."
+                },
+                {
+                    "id": 39,
+                    "description": "Establish a base here."
+                }
+            ]
+        },
+        {
+            "type": "InnerNode",
+            "id": 38,
+            "description": "You set off to explore another planet, ready for new challenges.",
+            "nextNodeId": 40,
+            "backgroundImage": "./images/scene15.jpg"
+        },
+        {
+            "type": "InnerNode",
+            "id": 39,
+            "description": "You establish a base and start a new life on the planet.",
+            "nextNodeId": 41,
+            "backgroundImage": "./images/scene16.jpg"
+        },
+        {
+            "type": "BattleNode",
+            "id": 40,
+            "description": "You encounter space pirates with 70 health and 15 attack!",
+            "enemyName": "Space Pirate",
+            "enemyHealth": 70,
+            "enemyAttack": 15,
+            "characterId": 0,
+            "chanceOptions": [
+                {
+                    "id": 42,
+                    "description": "You defeated the space pirates and took their loot."
+                },
+                {
+                    "id": 43,
+                    "description": "You were defeated by the space pirates."
+                },
+                {
+                    "id": 44,
+                    "description": "You managed to escape from the space pirates."
+                }
+            ],
+            "backgroundImage": "./images/scene17.jpg"
         },
         {
             "type": "TerminalNode",
-            "id": 26,
-            "description": "You escaped enemy and ran away.."
+            "id": 41,
+            "description": "You successfully established a base and started a new civilization.",
+            "backgroundImage": "./images/scene21.jpg"
         },
         {
             "type": "TerminalNode",
-            "id": 27,
-            "description": "You completed the trade and gained new items."
+            "id": 42,
+            "description": "You defeated the space pirates and took their loot.",
+            "backgroundImage": "./images/scene22.jpg"
+        },
+        {
+            "type": "TerminalNode",
+            "id": 43,
+            "description": "You were defeated by the space pirates.",
+            "backgroundImage": "./images/scene23.jpg"
+        },
+        {
+            "type": "TerminalNode",
+            "id": 44,
+            "description": "You managed to escape from the space pirates.",
+            "backgroundImage": "./images/scene24.jpg"
         }
     ]
 }
