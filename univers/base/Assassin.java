@@ -1,10 +1,10 @@
 package univers.base;
 
 // sub classes add one specific attribute to your character
-public class Assasin extends Character {
+public class Assassin extends Character {
     private int agileDamage;
 
-    public Assasin(String nom, int health, int force, Race race, int agileDamage, Planet planet) {
+    public Assassin(String nom, int health, int force, Race race, int agileDamage, Planet planet) {
         super(nom, health, force, race, planet);
         this.agileDamage = agileDamage;
     }
@@ -36,6 +36,10 @@ public class Assasin extends Character {
     @Override
     public int specificDamage() {
         return this.agileDamage;
+    }
+
+    public String getCharacterType() {
+        return "Assassin";
     }
 
 }

@@ -16,7 +16,7 @@ public class Game implements Serializable {
     private Node currentNode;
     public static final List<Planet> PLANETS_LIST = new ArrayList<>();
     private List<City> cities = new ArrayList<>();
-    private List<Character> characters = new ArrayList<>();
+    private static Character character;
     private NodeFactory nodeFactory;
 
     public Game() {
@@ -32,17 +32,12 @@ public class Game implements Serializable {
         getCurrentCharacter().setCurrentPlanet(newPlanet);
     }
 
-    public void addCharacter(Character character) {
-        characters.add(character);
-    }
-
     public void setCharacter(Character character) {
-        this.characters.remove(0);
-        this.characters.add(character);
+        Game.character = character;
     }
 
-    public Character getCurrentCharacter() {
-        return characters.get(0);
+    public static Character getCurrentCharacter() {
+        return character;
     }
 
     public void advanceToNode(int nodeId) {
@@ -94,9 +89,10 @@ public class Game implements Serializable {
     }
 
     public void createNodePool() throws IOException {
-        NodeFactory nodeFactory = new NodeFactory(characters);
+        NodeFactory nodeFactory = new NodeFactory();
         this.nodeFactory = nodeFactory;
         Map<Integer, Node> nodes = nodeFactory.createNodes("./gameMap.json");
         currentNode = nodes.get(0); // Start at the initial node
     }
+
 }

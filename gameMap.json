@@ -12,48 +12,48 @@
             "id": 1,
             "description": "You managed to escape to open space to seek new adventures...",
             "backgroundImage": "./images/scene2.jpg",
-            "nextNodeId": 3
+            "nextNodeId": 99
         },
         {
             "type": "DecisionNode",
             "id": 99,
             "description": "Its time to choose your character type",
-            "backgroundImage": "./images/scene3.jpg",
-            "outcomes": [
+            "backgroundImage": "./images/select_character.jpg",
+            "options": [
                 {
                     "id": 100,
-                    "type": "InnerNode",
                     "description": "You chose to be a warrior"
                 },
                 {
                     "id": 101,
-                    "type": "InnerNode",
                     "description": "You chose to be a assasin"
                 },
                 {
                     "id": 102,
-                    "type": "InnerNode",
                     "description": "You chose to be a explorer"
                 }
             ]
         },
         {
-            "type": "CharacterNode",
+            "type": "InnerNode",
             "id": 100,
             "description": "You chose to be a warrior",
-            "nextNodeId": 3
+            "nextNodeId": 3,
+            "backgroundImage": "./images/warrior.jpg"
         },
         {
-            "type": "CharacterNode",
+            "type": "InnerNode",
             "id": 101,
             "description": "You chose to be a assasin",
-            "nextNodeId": 3
+            "nextNodeId": 3,
+            "backgroundImage": "./images/assassin.jpg"
         },
         {
-            "type": "CharacterNode",
+            "type": "InnerNode",
             "id": 102,
             "description": "You chose to be a explorer",
-            "nextNodeId": 3
+            "nextNodeId": 3,
+            "backgroundImage": "./images/explorer.jpg"
         },
         {
             "type": "DecisionNode",

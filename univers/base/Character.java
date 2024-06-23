@@ -75,20 +75,26 @@ public abstract class Character implements Interact {
         return currentWeight;
     }
 
-    public String getCharacteType() {
-        return characterType;
-    }
+    public abstract String getCharacterType();
 
     public void setCharacterType(String characterType) {
         this.characterType = characterType;
     }
 
     public int getHealth() {
-        return health + this.equipedWeapon.getHealth();
+        int weaponHealth = 0;
+        if (this.equipedWeapon != null) {
+            weaponHealth = this.equipedWeapon.getHealth();
+        }
+        return health + weaponHealth;
     }
 
     public int getForce() {
-        return force + this.equipedWeapon.getAttack() + this.specificDamage();
+        int weaponForce = 0;
+        if (this.equipedWeapon != null) {
+            weaponForce = this.equipedWeapon.getAttack();
+        }
+        return force + weaponForce + this.specificDamage();
     }
 
     public void decreaseMoney(int amount) {

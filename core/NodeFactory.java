@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import representation.*;
 
-import univers.base.Character;
 import univers.base.Item;
 
 import java.io.File;
@@ -16,10 +15,9 @@ import java.util.Map;
 
 public class NodeFactory {
     private Map<Integer, Node> nodeMap = new HashMap<>();
-    private List<Character> characters;
 
-    public NodeFactory(List<Character> characters) {
-        this.characters = characters;
+    public NodeFactory() {
+
     }
 
     public Map<Integer, Node> createNodes(String jsonFilePath) throws IOException {
@@ -73,8 +71,7 @@ public class NodeFactory {
                 String enemyName = nodeJson.get("enemyName").asText();
                 int enemyHealth = nodeJson.get("enemyHealth").asInt();
                 int enemyAttack = nodeJson.get("enemyAttack").asInt();
-                Character character = characters.get(nodeJson.get("characterId").asInt());
-                BattleNode battleNode = new BattleNode(id, description, enemyName, enemyHealth, enemyAttack, character);
+                BattleNode battleNode = new BattleNode(id, description, enemyName, enemyHealth, enemyAttack);
 
                 if (nodeJson.has("backgroundImage")) {
                     battleNode.setBackgroundImage(nodeJson.get("backgroundImage").asText());
@@ -83,7 +80,6 @@ public class NodeFactory {
             case "TradeNode":
                 List<Item> itemsForSale = new ArrayList<>();
 
-                Character traderCharacter = characters.get(nodeJson.get("characterId").asInt());
                 for (JsonNode itemJson : nodeJson.get("itemsForSale")) {
                     String itemName = itemJson.get("name").asText();
                     int itemPrice = itemJson.get("price").asInt();
@@ -92,8 +88,7 @@ public class NodeFactory {
                     int itemAttack = itemJson.get("attack").asInt();
                     itemsForSale.add(new Item(itemName, itemPrice, itemWeight, itemHealth, itemAttack, 1));
                 }
-                TradeNode tradeNode = new TradeNode(id, description, itemsForSale,
-                        traderCharacter);
+                TradeNode tradeNode = new TradeNode(id, description, itemsForSale);
 
                 if (nodeJson.has("backgroundImage")) {
                     tradeNode.setBackgroundImage(nodeJson.get("backgroundImage").asText());

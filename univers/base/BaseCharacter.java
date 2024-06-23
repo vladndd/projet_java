@@ -36,4 +36,8 @@ public class BaseCharacter extends Character {
         return 0;
     }
 
+    public String getCharacterType() {
+        return "Base Character";
+    }
+
 }

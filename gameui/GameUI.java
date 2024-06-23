@@ -13,7 +13,10 @@ import representation.TradeNode;
 import univers.base.BaseCharacter;
 import univers.base.Planet;
 import univers.base.Race;
+import univers.base.Warrior;
+import univers.base.Assassin;
 import univers.base.Character;
+import univers.base.Explorer;
 import univers.base.Item;
 
 import java.awt.*;
@@ -91,7 +94,7 @@ public class GameUI extends JFrame implements ActionListener {
 
         String statsText = "Name: " + character.getName() + "\n" +
                 "Race: " + character.getRace() + "\n" +
-                "Character Type: " + character.getCharacteType() + "\n" +
+                "Character Type: " + character.getCharacterType() + "\n" +
                 "Specific attribute " + character.getSpecificAttribute() + "\n" +
                 "Current Planet: " + character.getStartPlanetName() + "\n" +
                 "Health: " + character.getHealth() + "\n" +
@@ -158,7 +161,7 @@ public class GameUI extends JFrame implements ActionListener {
         Planet planet = Game.PLANETS_LIST.get(planetChoice);
         BaseCharacter character = new BaseCharacter(name, 100, 10, race, planet);
 
-        game.addCharacter(character);
+        game.setCharacter(character);
 
         JOptionPane.showMessageDialog(this,
                 "Your character, " + character.getName() + " " + character.getRace() + " from "
@@ -207,84 +210,118 @@ public class GameUI extends JFrame implements ActionListener {
         } else if (currentNode instanceof DecisionNode) {
             List<Node> options = ((Optionable) currentNode).getOptions();
             for (Node option : options) {
-                boolean isHomePlanet = false;
+                JButton button;
+                if (currentNode.getId() == 99) {
+                    // Add buttons for character type selection
+                    switch (option.getId()) {
+                        case 100:
+                            button = new JButton("Choose Warrior");
+                            button.setActionCommand("select_warrior");
+                            break;
+                        case 101:
+                            button = new JButton("Choose Assassin");
+                            button.setActionCommand("select_assassin");
+                            break;
+                        case 102:
+                            button = new JButton("Choose Explorer");
+                            button.setActionCommand("select_explorer");
+                            break;
+                        default:
+                            continue;
+                    }
+                } else {
+                    boolean isHomePlanet = false;
+                    switch (option.getId()) {
+                        case 5:
+                            isHomePlanet = Game.getCurrentCharacter().getStartPlanetName().equals("Mercury");
+                            break;
+                        case 6:
+                            isHomePlanet = Game.getCurrentCharacter().getStartPlanetName().equals("Venus");
+                            break;
+                        case 7:
+                            isHomePlanet = Game.getCurrentCharacter().getStartPlanetName().equals("Earth");
+                            break;
+                        case 8:
+                            isHomePlanet = Game.getCurrentCharacter().getStartPlanetName().equals("Mars");
+                            break;
+                        case 9:
+                            isHomePlanet = Game.getCurrentCharacter().getStartPlanetName().equals("Jupiter");
+                            break;
+                        case 10:
+                            isHomePlanet = Game.getCurrentCharacter().getStartPlanetName().equals("Saturn");
+                            break;
+                        case 11:
+                            isHomePlanet = Game.getCurrentCharacter().getStartPlanetName().equals("Uranus");
+                            break;
+                        case 12:
+                            isHomePlanet = Game.getCurrentCharacter().getStartPlanetName().equals("Neptune");
+                            break;
+                        case 13:
+                            isHomePlanet = Game.getCurrentCharacter().getStartPlanetName().equals("Pluto");
+                            break;
+                    }
 
-                switch (option.getId()) {
-                    case 5:
-                        isHomePlanet = this.game.getCurrentCharacter().getStartPlanetName().equals("Mercury");
-                        break;
-                    case 6:
-                        isHomePlanet = this.game.getCurrentCharacter().getStartPlanetName().equals("Venus");
-                        break;
-                    case 7:
-                        isHomePlanet = this.game.getCurrentCharacter().getStartPlanetName().equals("Earth");
-                        break;
-                    case 8:
-                        isHomePlanet = this.game.getCurrentCharacter().getStartPlanetName().equals("Mars");
-                        break;
-                    case 9:
-                        isHomePlanet = this.game.getCurrentCharacter().getStartPlanetName().equals("Jupiter");
-                        break;
-                    case 10:
-                        isHomePlanet = this.game.getCurrentCharacter().getStartPlanetName().equals("Saturn");
-                        break;
-                    case 11:
-                        isHomePlanet = this.game.getCurrentCharacter().getStartPlanetName().equals("Uranus");
-                        break;
-                    case 12:
-                        isHomePlanet = this.game.getCurrentCharacter().getStartPlanetName().equals("Neptune");
-                        break;
-                    case 13:
-                        isHomePlanet = this.game.getCurrentCharacter().getStartPlanetName().equals("Pluto");
-                        break;
-                }
+                    if (isHomePlanet) {
+                        continue;
+                    }
 
-                if (!isHomePlanet) {
-                    JButton button = new JButton(option.getDescription());
+                    button = new JButton(option.getDescription());
                     button.setActionCommand(String.valueOf(option.getId()));
-                    button.addActionListener(this);
-                    optionsPanel.add(button);
                 }
+                button.addActionListener(this);
+                optionsPanel.add(button);
             }
         } else if (currentNode instanceof BattleNode) {
-            JButton button = new JButton("Fight " + ((BattleNode) currentNode).getEnemyName());
+
+            JButton button = new JButton("Fight " + ((BattleNode) currentNode)
+                    .getEnemyName());
             button.setActionCommand("battle");
             button.addActionListener(this);
             optionsPanel.add(button);
         } else if (currentNode instanceof TradeNode) {
             TradeNode tradeNode = (TradeNode) currentNode;
             for (Item item : tradeNode.getItemsForSale()) {
-                JButton button = new JButton("Trade for " + item.getName());
+                JButton button = new JButton("Trade for " + item
+                        .getName());
                 button.setActionCommand("trade");
                 button.addActionListener(this);
                 optionsPanel.add(button);
             }
         } else {
-            JButton button = new JButton("Continue");
+            JButton button = new JButton(
+                    "Continue");
             button.setActionCommand("advance");
             button.addActionListener(this);
             optionsPanel.add(button);
         }
 
-        Character character = game.getCurrentCharacter();
+        Character character = Game.getCurrentCharacter();
 
         for (String itemName : character.getInventory()) {
-            JButton button = new JButton("Equip " + itemName);
+            JButton button = new JButton("Equip "
+                    + itemName);
             button.setActionCommand("equip");
             button.addActionListener(this);
             optionsPanel.add(button);
         }
 
         if (character.getEquipedWeapon() != null) {
-            JButton button = new JButton("Unequip " + character.getEquipedWeapon().getName());
+            JButton button = new JButton("Unequip " + character.getEquipedWeapon()
+                    .getName());
             button.setActionCommand("unequip");
             button.addActionListener(this);
             optionsPanel.add(button);
         }
-        updateStats(game.getCurrentCharacter());
+
+        updateStats(Game.getCurrentCharacter());
 
         optionsPanel.revalidate();
         optionsPanel.repaint();
+    }
+
+    private void replaceCharacterWith(Character newCharacter) {
+        game.setCharacter(newCharacter);
+        updateStats(newCharacter);
     }
 
     @Override
@@ -309,11 +346,38 @@ public class GameUI extends JFrame implements ActionListener {
                 JButton sourceButton_ = (JButton) e.getSource();
                 String[] itemDetails = sourceButton_.getText().split(",")[0].split(" ");
                 String equipItemName = itemDetails[2];
-                game.getCurrentCharacter().equipItem(equipItemName);
+                Game.getCurrentCharacter().equipItem(equipItemName);
                 break;
             case "unequip":
-                game.getCurrentCharacter().unequipItem();
+                Game.getCurrentCharacter().unequipItem();
                 break;
+            case "select_warrior":
+                Character currentCharacter = Game.getCurrentCharacter();
+                ;
+
+                replaceCharacterWith(new Warrior(currentCharacter.getName(),
+                        currentCharacter.getHealth(),
+                        currentCharacter.getForce(), currentCharacter.getRace(), 40,
+                        currentCharacter.getStartPlanet()));
+                game.advanceToNode(100); // Advance to the node for choosing warrior
+                break;
+            case "select_assassin":
+                Character _currentCharacter = Game.getCurrentCharacter();
+
+                replaceCharacterWith(new Assassin(_currentCharacter.getName(),
+                        _currentCharacter.getHealth(),
+                        _currentCharacter.getForce(), _currentCharacter.getRace(), 40,
+                        _currentCharacter.getStartPlanet()));
+                game.advanceToNode(101); // Advance to the node for choosing assassin
+                break;
+            case "select_explorer":
+                Character __currentCharacter = Game.getCurrentCharacter();
+
+                replaceCharacterWith(new Explorer(__currentCharacter.getName(),
+                        __currentCharacter.getHealth(),
+                        __currentCharacter.getForce(), __currentCharacter.getRace(), 40,
+                        __currentCharacter.getStartPlanet()));
+                game.advanceToNode(102); // Advance to the node for choosing explorer
             case "restart":
                 showMainMenu();
                 return;

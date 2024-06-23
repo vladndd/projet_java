@@ -41,4 +41,8 @@ public class Explorer extends Character {
     public int specificDamage() {
         return this.intelligence;
     }
+
+    public String getCharacterType() {
+        return "Explorer";
+    }
 }

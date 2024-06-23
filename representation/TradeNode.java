@@ -3,19 +3,18 @@ package representation;
 import java.util.ArrayList;
 import java.util.List;
 
+import core.Game;
 import univers.base.Character;
 import univers.base.Item;
 
 public class TradeNode extends Node {
     private List<Item> itemsForSale;
     private List<Node> options;
-    private Character character;
 
-    public TradeNode(int id, String description, List<Item> itemsForSale, Character character) {
+    public TradeNode(int id, String description, List<Item> itemsForSale) {
         super(id, description);
         this.itemsForSale = itemsForSale;
         this.options = new ArrayList<>();
-        this.character = character;
 
     }
 
@@ -30,6 +29,7 @@ public class TradeNode extends Node {
 
     public void tradeItem(String itemKey) {
         Item itemToTrade = null;
+        Character character = Game.getCurrentCharacter();
         for (Item item : itemsForSale) {
             if (item.getName().equals(itemKey)) {
                 itemToTrade = item;

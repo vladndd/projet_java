@@ -41,4 +41,8 @@ public class Warrior extends Character {
     public int specificDamage() {
         return this.combatPower;
     }
+
+    public String getCharacterType() {
+        return "Warrior";
+    }
 }
