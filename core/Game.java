@@ -10,14 +10,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-// ADD CLASS CHOOSE + ATTRIBUTES, SAVE-LOAD SOUND , JAVADOC AND TESTS?
+// fix graphic position,  SOUND nodes , JAVADOC AND TESTS?
 
 public class Game implements Serializable {
     private Node currentNode;
     public static final List<Planet> PLANETS_LIST = new ArrayList<>();
     private List<City> cities = new ArrayList<>();
-    private static Character character;
+    private Character character;
     private NodeFactory nodeFactory;
+    private static final long serialVersionUID = 1L; // Add serialVersionUID
 
     public Game() {
         initializePlanets();
@@ -33,10 +34,10 @@ public class Game implements Serializable {
     }
 
     public void setCharacter(Character character) {
-        Game.character = character;
+        this.character = character;
     }
 
-    public static Character getCurrentCharacter() {
+    public Character getCurrentCharacter() {
         return character;
     }
 
@@ -89,7 +90,7 @@ public class Game implements Serializable {
     }
 
     public void createNodePool() throws IOException {
-        NodeFactory nodeFactory = new NodeFactory();
+        NodeFactory nodeFactory = new NodeFactory(this);
         this.nodeFactory = nodeFactory;
         Map<Integer, Node> nodes = nodeFactory.createNodes("./gameMap.json");
         currentNode = nodes.get(0); // Start at the initial node

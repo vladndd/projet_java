@@ -10,11 +10,13 @@ import univers.base.Item;
 public class TradeNode extends Node {
     private List<Item> itemsForSale;
     private List<Node> options;
+    private Game game;
 
-    public TradeNode(int id, String description, List<Item> itemsForSale) {
+    public TradeNode(int id, String description, List<Item> itemsForSale, Game game) {
         super(id, description);
         this.itemsForSale = itemsForSale;
         this.options = new ArrayList<>();
+        this.game = game;
 
     }
 
@@ -29,7 +31,7 @@ public class TradeNode extends Node {
 
     public void tradeItem(String itemKey) {
         Item itemToTrade = null;
-        Character character = Game.getCurrentCharacter();
+        Character character = game.getCurrentCharacter();
         for (Item item : itemsForSale) {
             if (item.getName().equals(itemKey)) {
                 itemToTrade = item;

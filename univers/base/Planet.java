@@ -1,10 +1,11 @@
 package univers.base;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 // Classe représentant une planète
-public class Planet {
+public class Planet implements Serializable {
     private String name;
     private String typeClimat;
     private List<Race> racesIndigenes;

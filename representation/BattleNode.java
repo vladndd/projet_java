@@ -11,13 +11,15 @@ public class BattleNode extends Node {
     private int enemyHealth;
     private int enemyAttack;
     private List<Node> options;
+    private Game game;
 
-    public BattleNode(int id, String description, String enemyName, int enemyHealth, int enemyAttack) {
+    public BattleNode(int id, String description, String enemyName, int enemyHealth, int enemyAttack, Game game) {
         super(id, description);
         this.enemyName = enemyName;
         this.enemyHealth = enemyHealth;
         this.enemyAttack = enemyAttack;
         this.options = new ArrayList<>();
+        this.game = game;
     }
 
     public String getEnemyName() {
@@ -41,7 +43,7 @@ public class BattleNode extends Node {
         // Logic for choosing the next node after the battle
         // Placeholder: assuming battle outcome determines the next node
 
-        Character character = Game.getCurrentCharacter();
+        Character character = game.getCurrentCharacter();
         int enemyAttackYou = character.getHealth() - this.enemyAttack;
 
         int yourAttackOnEnemy = this.enemyHealth

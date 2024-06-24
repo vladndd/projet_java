@@ -1,10 +1,11 @@
 package univers.base;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import javax.swing.JOptionPane;
 
-public abstract class Character implements Interact {
+public abstract class Character implements Serializable {
     protected String nom;
     protected int health;
     protected int force;

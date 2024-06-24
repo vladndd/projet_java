@@ -1,13 +1,15 @@
 package representation;
 
 import java.awt.MediaTracker;
+import java.io.Serializable;
 
 import javax.swing.ImageIcon;
 
-public abstract class Node implements Event {
+public abstract class Node implements Serializable {
     protected int id;
     protected String description;
     private ImageIcon backgroundImage;
+    private String soundFilePath; // Add soundFilePath attribute
 
     public Node(int id, String description) {
         this.id = id;
@@ -25,6 +27,14 @@ public abstract class Node implements Event {
 
     public int getId() {
         return id;
+    }
+
+    public String getSoundFilePath() {
+        return soundFilePath;
+    }
+
+    public void setSoundFilePath(String soundFilePath) {
+        this.soundFilePath = soundFilePath;
     }
 
     public abstract Node chooseNext();

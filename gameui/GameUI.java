@@ -14,6 +14,7 @@ import univers.base.BaseCharacter;
 import univers.base.Planet;
 import univers.base.Race;
 import univers.base.Warrior;
+import utility.SoundManager;
 import univers.base.Assassin;
 import univers.base.Character;
 import univers.base.Explorer;
@@ -33,9 +34,11 @@ public class GameUI extends JFrame implements ActionListener {
     private JLabel backgroundLabel;
     private JTextArea statsArea;
     private JPanel mainContentPanel; // Store main content panel reference
+    private SoundManager soundManager; // SoundManager instance
 
     public GameUI(Game game) {
         this.game = game;
+        this.soundManager = new SoundManager();
 
         setTitle("Space Adventure Game");
         setSize(700, 600);
@@ -82,6 +85,27 @@ public class GameUI extends JFrame implements ActionListener {
         descriptionPanel.add(optionsPanel, BorderLayout.SOUTH);
 
         mainContentPanel.add(descriptionPanel, BorderLayout.SOUTH);
+
+        // Add save button to the statsPanel
+        JButton saveButton = new JButton("Save Game");
+        saveButton.setActionCommand("save_game");
+        saveButton.addActionListener(this);
+        statsPanel.add(saveButton);
+
+        JButton newGameButton = new JButton("New Game");
+        newGameButton.setActionCommand("new_game");
+        newGameButton.addActionListener(this);
+        statsPanel.add(newGameButton);
+
+        JButton loadGameButton = new JButton("Load Game");
+        loadGameButton.setActionCommand("load_game");
+        loadGameButton.addActionListener(this);
+        statsPanel.add(loadGameButton);
+
+        JButton exitButton = new JButton("Exit");
+        exitButton.setActionCommand("exit");
+        exitButton.addActionListener(this);
+        statsPanel.add(exitButton);
 
         setVisible(true);
     }
@@ -197,6 +221,12 @@ public class GameUI extends JFrame implements ActionListener {
             backgroundLabel.setIcon(null);
         }
 
+        // Play the associated sound for the current node
+        String soundFilePath = currentNode.getSoundFilePath(); // Assuming each node has a sound file path
+        if (soundFilePath != null) {
+            soundManager.playSound(soundFilePath);
+        }
+
         if (currentNode instanceof TerminalNode) {
             JButton button = new JButton("Game over, restart");
             button.setActionCommand("restart");
@@ -233,31 +263,31 @@ public class GameUI extends JFrame implements ActionListener {
                     boolean isHomePlanet = false;
                     switch (option.getId()) {
                         case 5:
-                            isHomePlanet = Game.getCurrentCharacter().getStartPlanetName().equals("Mercury");
+                            isHomePlanet = game.getCurrentCharacter().getStartPlanetName().equals("Mercury");
                             break;
                         case 6:
-                            isHomePlanet = Game.getCurrentCharacter().getStartPlanetName().equals("Venus");
+                            isHomePlanet = game.getCurrentCharacter().getStartPlanetName().equals("Venus");
                             break;
                         case 7:
-                            isHomePlanet = Game.getCurrentCharacter().getStartPlanetName().equals("Earth");
+                            isHomePlanet = game.getCurrentCharacter().getStartPlanetName().equals("Earth");
                             break;
                         case 8:
-                            isHomePlanet = Game.getCurrentCharacter().getStartPlanetName().equals("Mars");
+                            isHomePlanet = game.getCurrentCharacter().getStartPlanetName().equals("Mars");
                             break;
                         case 9:
-                            isHomePlanet = Game.getCurrentCharacter().getStartPlanetName().equals("Jupiter");
+                            isHomePlanet = game.getCurrentCharacter().getStartPlanetName().equals("Jupiter");
                             break;
                         case 10:
-                            isHomePlanet = Game.getCurrentCharacter().getStartPlanetName().equals("Saturn");
+                            isHomePlanet = game.getCurrentCharacter().getStartPlanetName().equals("Saturn");
                             break;
                         case 11:
-                            isHomePlanet = Game.getCurrentCharacter().getStartPlanetName().equals("Uranus");
+                            isHomePlanet = game.getCurrentCharacter().getStartPlanetName().equals("Uranus");
                             break;
                         case 12:
-                            isHomePlanet = Game.getCurrentCharacter().getStartPlanetName().equals("Neptune");
+                            isHomePlanet = game.getCurrentCharacter().getStartPlanetName().equals("Neptune");
                             break;
                         case 13:
-                            isHomePlanet = Game.getCurrentCharacter().getStartPlanetName().equals("Pluto");
+                            isHomePlanet = game.getCurrentCharacter().getStartPlanetName().equals("Pluto");
                             break;
                     }
 
@@ -295,7 +325,7 @@ public class GameUI extends JFrame implements ActionListener {
             optionsPanel.add(button);
         }
 
-        Character character = Game.getCurrentCharacter();
+        Character character = game.getCurrentCharacter();
 
         for (String itemName : character.getInventory()) {
             JButton button = new JButton("Equip "
@@ -313,7 +343,7 @@ public class GameUI extends JFrame implements ActionListener {
             optionsPanel.add(button);
         }
 
-        updateStats(Game.getCurrentCharacter());
+        updateStats(game.getCurrentCharacter());
 
         optionsPanel.revalidate();
         optionsPanel.repaint();
@@ -346,13 +376,13 @@ public class GameUI extends JFrame implements ActionListener {
                 JButton sourceButton_ = (JButton) e.getSource();
                 String[] itemDetails = sourceButton_.getText().split(",")[0].split(" ");
                 String equipItemName = itemDetails[2];
-                Game.getCurrentCharacter().equipItem(equipItemName);
+                game.getCurrentCharacter().equipItem(equipItemName);
                 break;
             case "unequip":
-                Game.getCurrentCharacter().unequipItem();
+                game.getCurrentCharacter().unequipItem();
                 break;
             case "select_warrior":
-                Character currentCharacter = Game.getCurrentCharacter();
+                Character currentCharacter = game.getCurrentCharacter();
                 ;
 
                 replaceCharacterWith(new Warrior(currentCharacter.getName(),
@@ -362,7 +392,7 @@ public class GameUI extends JFrame implements ActionListener {
                 game.advanceToNode(100); // Advance to the node for choosing warrior
                 break;
             case "select_assassin":
-                Character _currentCharacter = Game.getCurrentCharacter();
+                Character _currentCharacter = game.getCurrentCharacter();
 
                 replaceCharacterWith(new Assassin(_currentCharacter.getName(),
                         _currentCharacter.getHealth(),
@@ -371,13 +401,14 @@ public class GameUI extends JFrame implements ActionListener {
                 game.advanceToNode(101); // Advance to the node for choosing assassin
                 break;
             case "select_explorer":
-                Character __currentCharacter = Game.getCurrentCharacter();
+                Character __currentCharacter = game.getCurrentCharacter();
 
                 replaceCharacterWith(new Explorer(__currentCharacter.getName(),
                         __currentCharacter.getHealth(),
                         __currentCharacter.getForce(), __currentCharacter.getRace(), 40,
                         __currentCharacter.getStartPlanet()));
                 game.advanceToNode(102); // Advance to the node for choosing explorer
+                break;
             case "restart":
                 showMainMenu();
                 return;
@@ -386,6 +417,9 @@ public class GameUI extends JFrame implements ActionListener {
                 return;
             case "load_game":
                 loadGame();
+                return;
+            case "save_game":
+                saveGame();
                 return;
             case "exit":
                 System.exit(0);
@@ -467,6 +501,21 @@ public class GameUI extends JFrame implements ActionListener {
                 updateDisplay();
             } catch (IOException | ClassNotFoundException ex) {
                 JOptionPane.showMessageDialog(this, "Error loading game: " + ex.getMessage());
+            }
+        }
+    }
+
+    private void saveGame() {
+        JFileChooser fileChooser = new JFileChooser();
+        int returnValue = fileChooser.showSaveDialog(this);
+
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            try {
+                File selectedFile = fileChooser.getSelectedFile();
+                game.saveGame(selectedFile.getPath());
+                JOptionPane.showMessageDialog(this, "Game saved successfully!");
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Error saving game: " + ex.getMessage());
             }
         }
     }

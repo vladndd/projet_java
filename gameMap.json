@@ -216,6 +216,7 @@
             "enemyHealth": 50,
             "enemyAttack": 10,
             "characterId": 0,
+            "soundFilePath": "./sounds/test.wav",
             "chanceOptions": [
                 {
                     "id": 24,
@@ -445,6 +446,7 @@
             "enemyHealth": 70,
             "enemyAttack": 15,
             "characterId": 0,
+            "soundFilePath": "./sounds/test.wav",
             "chanceOptions": [
                 {
                     "id": 42,
