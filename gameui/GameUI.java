@@ -36,6 +36,8 @@ public class GameUI extends JFrame implements ActionListener {
     private JPanel mainContentPanel; // Store main content panel reference
     private SoundManager soundManager; // SoundManager instance
 
+    // Assume other components and variables are declared elsewhere in your class
+
     public GameUI(Game game) {
         this.game = game;
         this.soundManager = new SoundManager();
@@ -45,27 +47,67 @@ public class GameUI extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
 
+        // Main layout of the window
         setLayout(new BorderLayout());
 
+        // Main content panel
         mainContentPanel = new JPanel(new BorderLayout());
         mainContentPanel.setOpaque(false);
         add(mainContentPanel, BorderLayout.CENTER);
 
+        // Background
+
+        // Background label initialization and setup
         backgroundLabel = new JLabel();
         backgroundLabel.setLayout(new BorderLayout());
+        backgroundLabel.setHorizontalAlignment(JLabel.CENTER); // Horizontally center the content
+        backgroundLabel.setVerticalAlignment(JLabel.CENTER); // Vertically center the content
         mainContentPanel.add(backgroundLabel, BorderLayout.CENTER);
 
-        JPanel statsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        statsPanel.setOpaque(false);
+        // Stats and buttons panel
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.setOpaque(false);
+
+        // Stats area
         statsArea = new JTextArea(5, 20);
         statsArea.setEditable(false);
         statsArea.setOpaque(false);
         statsArea.setForeground(Color.BLACK);
-        statsPanel.add(statsArea);
-        mainContentPanel.add(statsPanel, BorderLayout.NORTH);
+        topPanel.add(statsArea, BorderLayout.CENTER); // Add to the center
 
-        JPanel descriptionPanel = new JPanel(new BorderLayout());
-        descriptionPanel.setOpaque(false);
+        // Buttons panel
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+        buttonPanel.setOpaque(false);
+
+        // Adding buttons
+        JButton saveButton = new JButton("Save Game");
+        saveButton.setActionCommand("save_game");
+        saveButton.addActionListener(this);
+        buttonPanel.add(saveButton);
+
+        JButton newGameButton = new JButton("New Game");
+        newGameButton.setActionCommand("new_game");
+        newGameButton.addActionListener(this);
+        buttonPanel.add(newGameButton);
+
+        JButton loadGameButton = new JButton("Load Game");
+        loadGameButton.setActionCommand("load_game");
+        loadGameButton.addActionListener(this);
+        buttonPanel.add(loadGameButton);
+
+        JButton exitButton = new JButton("Exit");
+        exitButton.setActionCommand("exit");
+        exitButton.addActionListener(this);
+        buttonPanel.add(exitButton);
+
+        // Add button panel to the right
+        topPanel.add(buttonPanel, BorderLayout.EAST);
+
+        // Add top panel to the north of the main content panel
+        mainContentPanel.add(topPanel, BorderLayout.NORTH);
+
+        // Other components (description panel, etc.) would go here...
 
         descriptionArea = new JTextArea();
         descriptionArea.setLineWrap(true);
@@ -73,10 +115,14 @@ public class GameUI extends JFrame implements ActionListener {
         descriptionArea.setEditable(false);
         descriptionArea.setOpaque(false);
         descriptionArea.setForeground(Color.BLACK);
+
         JScrollPane scrollPane = new JScrollPane(descriptionArea);
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
         scrollPane.setBorder(null);
+
+        JPanel descriptionPanel = new JPanel(new BorderLayout());
+        descriptionPanel.setOpaque(false);
         descriptionPanel.add(scrollPane, BorderLayout.CENTER);
 
         optionsPanel = new JPanel();
@@ -85,27 +131,6 @@ public class GameUI extends JFrame implements ActionListener {
         descriptionPanel.add(optionsPanel, BorderLayout.SOUTH);
 
         mainContentPanel.add(descriptionPanel, BorderLayout.SOUTH);
-
-        // Add save button to the statsPanel
-        JButton saveButton = new JButton("Save Game");
-        saveButton.setActionCommand("save_game");
-        saveButton.addActionListener(this);
-        statsPanel.add(saveButton);
-
-        JButton newGameButton = new JButton("New Game");
-        newGameButton.setActionCommand("new_game");
-        newGameButton.addActionListener(this);
-        statsPanel.add(newGameButton);
-
-        JButton loadGameButton = new JButton("Load Game");
-        loadGameButton.setActionCommand("load_game");
-        loadGameButton.addActionListener(this);
-        statsPanel.add(loadGameButton);
-
-        JButton exitButton = new JButton("Exit");
-        exitButton.setActionCommand("exit");
-        exitButton.addActionListener(this);
-        statsPanel.add(exitButton);
 
         setVisible(true);
     }

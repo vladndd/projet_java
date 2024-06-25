@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-// fix graphic position, JAVADOC, TESTS , clean code add readme.md
+// JAVADOC, TESTS , clean code add readme.md
 
 public class Game implements Serializable {
     private Node currentNode;
