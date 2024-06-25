@@ -84,6 +84,11 @@ public abstract class Character implements Serializable {
 
     public int getHealth() {
         int weaponHealth = 0;
+
+        if (this.health <= 0) {
+            this.health = 0;
+        }
+
         if (this.equipedWeapon != null) {
             weaponHealth = this.equipedWeapon.getHealth();
         }

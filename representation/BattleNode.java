@@ -54,13 +54,14 @@ public class BattleNode extends Node {
         character.fight(enemyAttack);
         System.out.println("You have " + this.options);
 
-        if (yourAttackOnEnemy <= 0) {
-            return this.options.get(0); // You won and killed the enemy
-        } else if (enemyAttackYou <= 0) {
+        if (enemyAttackYou <= 0) {
             return this.options.get(1); // You died
+        } else if (yourAttackOnEnemy <= 0) {
+            return this.options.get(0); // You won and killed the enemy
         } else {
-            return this.options.get(2); // You escaped
+            return this.options.get(2); // You won but the enemy is still alive
         }
+
     }
 
     @Override

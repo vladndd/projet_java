@@ -25,6 +25,10 @@ public class BaseCharacter extends Character {
     @Override
     public void fight(int intakeDamage) {
         this.health -= intakeDamage;
+
+        if (this.health <= 0) {
+            this.health = 0;
+        }
     }
 
     public String getSpecificAttribute() {
