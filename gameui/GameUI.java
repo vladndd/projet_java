@@ -18,6 +18,7 @@ import univers.Item;
 import univers.Planet;
 import univers.Race;
 import univers.Warrior;
+import utility.GameUIutilities;
 import utility.SoundManager;
 
 import java.awt.*;
@@ -82,24 +83,16 @@ public class GameUI extends JFrame implements ActionListener {
         buttonPanel.setOpaque(false);
 
         // Adding buttons
-        JButton saveButton = new JButton("Save Game");
-        saveButton.setActionCommand("save_game");
-        saveButton.addActionListener(this);
+        JButton saveButton = createButton("Save Game", "save_game");
         buttonPanel.add(saveButton);
 
-        JButton newGameButton = new JButton("New Game");
-        newGameButton.setActionCommand("new_game");
-        newGameButton.addActionListener(this);
+        JButton newGameButton = createButton("New Game", "new_game");
         buttonPanel.add(newGameButton);
 
-        JButton loadGameButton = new JButton("Load Game");
-        loadGameButton.setActionCommand("load_game");
-        loadGameButton.addActionListener(this);
+        JButton loadGameButton = createButton("Load Game", "load_game");
         buttonPanel.add(loadGameButton);
 
-        JButton exitButton = new JButton("Exit");
-        exitButton.setActionCommand("exit");
-        exitButton.addActionListener(this);
+        JButton exitButton = createButton("Exit", "exit");
         buttonPanel.add(exitButton);
 
         // Add button panel to the right
@@ -254,68 +247,19 @@ public class GameUI extends JFrame implements ActionListener {
         }
 
         if (currentNode instanceof TerminalNode) {
-            JButton button = new JButton("Game over, restart");
-            button.setActionCommand("restart");
-            button.addActionListener(this);
-            optionsPanel.add(button);
+            optionsPanel.add(createButton("Game over, restart", "restart"));
         } else if (currentNode instanceof ChanceNode) {
-            JButton button = new JButton("See whats next..");
-            button.setActionCommand("advance");
-            button.addActionListener(this);
-            optionsPanel.add(button);
+            optionsPanel.add(createButton("See what's next..", "advance"));
         } else if (currentNode instanceof DecisionNode) {
             List<Node> options = ((Optionable) currentNode).getOptions();
             for (Node option : options) {
                 JButton button;
                 if (currentNode.getId() == 99) {
                     // Add buttons for character type selection
-                    switch (option.getId()) {
-                        case 100:
-                            button = new JButton("Choose Warrior");
-                            button.setActionCommand("select_warrior");
-                            break;
-                        case 101:
-                            button = new JButton("Choose Assassin");
-                            button.setActionCommand("select_assassin");
-                            break;
-                        case 102:
-                            button = new JButton("Choose Explorer");
-                            button.setActionCommand("select_explorer");
-                            break;
-                        default:
-                            continue;
-                    }
+                    button = GameUIutilities.createCharacterSelectionButton(option.getId());
                 } else {
                     boolean isHomePlanet = false;
-                    switch (option.getId()) {
-                        case 5:
-                            isHomePlanet = game.getCurrentCharacter().getStartPlanetName().equals("Mercury");
-                            break;
-                        case 6:
-                            isHomePlanet = game.getCurrentCharacter().getStartPlanetName().equals("Venus");
-                            break;
-                        case 7:
-                            isHomePlanet = game.getCurrentCharacter().getStartPlanetName().equals("Earth");
-                            break;
-                        case 8:
-                            isHomePlanet = game.getCurrentCharacter().getStartPlanetName().equals("Mars");
-                            break;
-                        case 9:
-                            isHomePlanet = game.getCurrentCharacter().getStartPlanetName().equals("Jupiter");
-                            break;
-                        case 10:
-                            isHomePlanet = game.getCurrentCharacter().getStartPlanetName().equals("Saturn");
-                            break;
-                        case 11:
-                            isHomePlanet = game.getCurrentCharacter().getStartPlanetName().equals("Uranus");
-                            break;
-                        case 12:
-                            isHomePlanet = game.getCurrentCharacter().getStartPlanetName().equals("Neptune");
-                            break;
-                        case 13:
-                            isHomePlanet = game.getCurrentCharacter().getStartPlanetName().equals("Pluto");
-                            break;
-                    }
+                    isHomePlanet = GameUIutilities.isHomePlanet(game, option.getId());
 
                     if (isHomePlanet) {
                         continue;
@@ -328,29 +272,16 @@ public class GameUI extends JFrame implements ActionListener {
                 optionsPanel.add(button);
             }
         } else if (currentNode instanceof BattleNode) {
-
-            JButton button = new JButton("Fight " + ((BattleNode) currentNode)
-                    .getEnemyName());
-            button.setActionCommand("battle");
-            button.addActionListener(this);
-            optionsPanel.add(button);
+            optionsPanel.add(createButton("Fight " + ((BattleNode) currentNode).getEnemyName(), "battle"));
         } else if (currentNode instanceof TradeNode) {
             TradeNode tradeNode = (TradeNode) currentNode;
             for (Item item : tradeNode.getItemsForSale()) {
-                JButton button = new JButton("Trade for " + item
-                        .getName() + " " + item.getPrice());
+                JButton button = createButton("Trade for " + item.getName() + " " + item.getPrice(), "trade");
                 button.putClientProperty("item", item); // Storing the item object directly on the button
-
-                button.setActionCommand("trade");
-                button.addActionListener(this);
                 optionsPanel.add(button);
             }
         } else {
-            JButton button = new JButton(
-                    "Continue");
-            button.setActionCommand("advance");
-            button.addActionListener(this);
-            optionsPanel.add(button);
+            optionsPanel.add(createButton("Continue", "advance"));
         }
 
         Character character = game.getCurrentCharacter();
@@ -385,6 +316,13 @@ public class GameUI extends JFrame implements ActionListener {
     private void replaceCharacterWith(Character newCharacter) {
         game.setCharacter(newCharacter);
         updateStats(newCharacter);
+    }
+
+    private JButton createButton(String text, String actionCommand) {
+        JButton button = new JButton(text);
+        button.setActionCommand(actionCommand);
+        button.addActionListener(this);
+        return button;
     }
 
     @Override
