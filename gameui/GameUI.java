@@ -44,14 +44,13 @@ public class GameUI extends JFrame implements ActionListener {
         this.game = game;
         this.soundManager = new SoundManager();
 
-        setTitle("Space Adventure Game");
-        setSize(700, 600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setResizable(false);
+        this.setupFrame();
+        this.initializeComponents();
 
-        // Main layout of the window
-        setLayout(new BorderLayout());
+        setVisible(true);
+    }
 
+    private void initializeComponents() {
         // Main content panel
         mainContentPanel = new JPanel(new BorderLayout());
         mainContentPanel.setOpaque(false);
@@ -125,8 +124,14 @@ public class GameUI extends JFrame implements ActionListener {
         descriptionPanel.add(optionsPanel, BorderLayout.SOUTH);
 
         mainContentPanel.add(descriptionPanel, BorderLayout.SOUTH);
+    }
 
-        setVisible(true);
+    private void setupFrame() {
+        setTitle("Space Adventure Game");
+        setSize(600, 600);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
+        setLayout(new BorderLayout());
     }
 
     private void updateStats(Character character) {
@@ -395,44 +400,12 @@ public class GameUI extends JFrame implements ActionListener {
                 return;
             default:
                 int nodeId = Integer.parseInt(command);
-                updatePlanet(nodeId);
+                GameUIutilities.updatePlanet(game, nodeId);
                 game.advanceToNode(nodeId);
                 break;
         }
 
         updateDisplay();
-    }
-
-    private void updatePlanet(int nodeId) {
-        switch (nodeId) {
-            case 5:
-                game.updateCurrentPlanet(new Planet("Mercury", "Very hot planet with no atmosphere."));
-                break;
-            case 6:
-                game.updateCurrentPlanet(new Planet("Venus", "Thick atmosphere and volcanic activity."));
-                break;
-            case 7:
-                game.updateCurrentPlanet(new Planet("Earth", "Rich in life and diverse climates."));
-                break;
-            case 8:
-                game.updateCurrentPlanet(new Planet("Mars", "Red planet with potential for life."));
-                break;
-            case 9:
-                game.updateCurrentPlanet(new Planet("Jupiter", "Giant gas planet with a strong magnetic field."));
-                break;
-            case 10:
-                game.updateCurrentPlanet(new Planet("Saturn", "Known for its extensive ring system."));
-                break;
-            case 11:
-                game.updateCurrentPlanet(new Planet("Uranus", "Ice giant with a tilted axis."));
-                break;
-            case 12:
-                game.updateCurrentPlanet(new Planet("Neptune", "Cold blue planet with strong winds."));
-                break;
-            case 13:
-                game.updateCurrentPlanet(new Planet("Pluto", "Dwarf planet with a heart-shaped glacier."));
-                break;
-        }
     }
 
     private void showMainMenu() {
