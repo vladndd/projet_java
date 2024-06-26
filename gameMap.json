@@ -441,10 +441,10 @@
         {
             "type": "BattleNode",
             "id": 40,
-            "description": "You encounter space pirates with 70 health and 130 attack!",
+            "description": "You encounter space pirates with 70 health and 100 attack!",
             "enemyName": "Space Pirate",
             "enemyHealth": 70,
-            "enemyAttack": 130,
+            "enemyAttack": 100,
             "characterId": 0,
             "soundFilePath": "./sounds/test.wav",
             "chanceOptions": [

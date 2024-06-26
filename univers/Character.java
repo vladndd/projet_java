@@ -86,6 +86,7 @@ public abstract class Character implements Serializable, Interact {
 
         if (this.health <= 0) {
             this.health = 0;
+            return 0;
         }
 
         if (this.equipedWeapon != null) {
