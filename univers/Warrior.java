@@ -1,4 +1,4 @@
-package univers.base;
+package univers;
 
 // sub classes add one specific attribute to your character
 public class Warrior extends Character {
@@ -7,16 +7,6 @@ public class Warrior extends Character {
     public Warrior(String nom, int health, int force, Race race, int combatPower, Planet planet) {
         super(nom, health, force, race, planet);
         this.combatPower = combatPower;
-    }
-
-    @Override
-    public void interact() {
-        System.out.println(nom + ": En garde ! Prépare-toi au combat.");
-    }
-
-    @Override
-    public void speak() {
-        System.out.println(nom + ": Prépare-toi à la bataille, ennemi approchant !");
     }
 
     @Override

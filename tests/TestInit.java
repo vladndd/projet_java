@@ -1,9 +1,9 @@
 package tests;
 
-import univers.base.Character;
-import univers.base.Item;
-import univers.base.Planet;
-import univers.base.Race;
+import univers.Character;
+import univers.Item;
+import univers.Planet;
+import univers.Race;
 import core.Game;
 
 // Stub implementation of the Game class
@@ -51,18 +51,6 @@ class StubCharacter extends Character {
     @Override
     public void fight(int damage) {
         this.health -= damage;
-    }
-
-    @Override
-    public void interact() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'interact'");
-    }
-
-    @Override
-    public void speak() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'speak'");
     }
 
     @Override

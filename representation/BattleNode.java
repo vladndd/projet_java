@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import core.Game;
-import univers.base.Character;
+import univers.Character;
 
 public class BattleNode extends Node {
     private String enemyName;
@@ -66,7 +66,7 @@ public class BattleNode extends Node {
 
     @Override
     public Node checkNext() {
-        // TODO Auto-generated method stub
+
         throw new UnsupportedOperationException("Unimplemented method 'checkNext'");
     }
 }

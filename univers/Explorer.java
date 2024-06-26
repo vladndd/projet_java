@@ -1,4 +1,4 @@
-package univers.base;
+package univers;
 
 // Implémentation concrète d'un Explorateur
 public class Explorer extends Character {
@@ -7,16 +7,6 @@ public class Explorer extends Character {
     public Explorer(String nom, int health, int force, Race race, int intelligence, Planet planet) {
         super(nom, health, force, race, planet);
         this.intelligence = intelligence;
-    }
-
-    @Override
-    public void interact() {
-        System.out.println(nom + ": Explorons les mystères de cette planète !");
-    }
-
-    @Override
-    public void speak() {
-        System.out.println(nom + ": Observons notre environnement pour mieux comprendre où nous sommes.");
     }
 
     @Override

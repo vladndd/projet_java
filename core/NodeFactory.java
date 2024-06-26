@@ -3,8 +3,7 @@ package core;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import representation.*;
-
-import univers.base.Item;
+import univers.Item;
 
 import java.io.File;
 import java.io.IOException;

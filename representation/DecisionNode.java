@@ -20,15 +20,8 @@ public class DecisionNode extends Node implements Optionable {
 
     @Override
     public Node chooseNext() {
-        // Simulation d'une interaction utilisateur pour choisir un nœud suivant
-        System.out.println("Choisissez une option:");
-        for (int i = 0; i < options.size(); i++) {
-            System.out.println(i + 1 + ". " + options.get(i).description);
-        }
 
         int choice = Utility.scanner.nextInt();
-
-        // Scanner sc = new Scanner(System.in);
 
         return options.get(choice - 1);
     }

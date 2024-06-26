@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import javax.swing.ImageIcon;
 
-public abstract class Node implements Serializable {
+public abstract class Node implements Serializable, Event {
     protected int id;
     protected String description;
     private ImageIcon backgroundImage;
@@ -14,11 +14,6 @@ public abstract class Node implements Serializable {
     public Node(int id, String description) {
         this.id = id;
         this.description = description;
-
-    }
-
-    public void display() {
-        System.out.println(description);
     }
 
     public String getDescription() {

@@ -1,11 +1,11 @@
-package univers.base;
+package univers;
 
 import java.io.Serializable;
 import java.util.HashMap;
 
 import javax.swing.JOptionPane;
 
-public abstract class Character implements Serializable {
+public abstract class Character implements Serializable, Interact {
     protected String nom;
     protected int health;
     protected int force;
@@ -28,13 +28,7 @@ public abstract class Character implements Serializable {
         this.money = 100; // for all characters
         this.maxweight = 100; // for all characters
 
-        // this.inventory.put("Weapon", this.equipedWeapon);
     }
-
-    // Define the methods declared in the Interact interface
-    public abstract void interact();
-
-    public abstract void speak();
 
     public abstract void trade(Item item);
 
@@ -53,6 +47,11 @@ public abstract class Character implements Serializable {
                     + item.getQuantity() + ", Weight: " + item.getWeight();
         }
         return inventoryArray;
+    }
+
+    public HashMap<String, Item> getInventoryItems() {
+
+        return inventory;
     }
 
     public void addToInventory(Item item) {
@@ -143,8 +142,8 @@ public abstract class Character implements Serializable {
         return equipedWeapon;
     }
 
-    public void equipItem(String itemName) {
-        Item item = inventory.get(itemName);
+    public void equipItem(Item itemToEquip) {
+        Item item = inventory.get(itemToEquip.getName());
         if (item != null) {
             Item equippedItem = this.getEquipedWeapon();
             if (equippedItem != null) {
@@ -154,7 +153,7 @@ public abstract class Character implements Serializable {
 
             item.setEquipped(true);
             setEquipedWeapon(item);
-            this.inventory.remove(itemName);
+            this.inventory.remove(itemToEquip.getName());
         }
     }
 

@@ -10,15 +10,15 @@ import representation.Node;
 import representation.Optionable;
 import representation.TerminalNode;
 import representation.TradeNode;
-import univers.base.BaseCharacter;
-import univers.base.Planet;
-import univers.base.Race;
-import univers.base.Warrior;
+import univers.Assassin;
+import univers.BaseCharacter;
+import univers.Character;
+import univers.Explorer;
+import univers.Item;
+import univers.Planet;
+import univers.Race;
+import univers.Warrior;
 import utility.SoundManager;
-import univers.base.Assassin;
-import univers.base.Character;
-import univers.base.Explorer;
-import univers.base.Item;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -26,6 +26,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public class GameUI extends JFrame implements ActionListener {
     private Game game;
@@ -337,7 +338,9 @@ public class GameUI extends JFrame implements ActionListener {
             TradeNode tradeNode = (TradeNode) currentNode;
             for (Item item : tradeNode.getItemsForSale()) {
                 JButton button = new JButton("Trade for " + item
-                        .getName());
+                        .getName() + " " + item.getPrice());
+                button.putClientProperty("item", item); // Storing the item object directly on the button
+
                 button.setActionCommand("trade");
                 button.addActionListener(this);
                 optionsPanel.add(button);
@@ -352,12 +355,17 @@ public class GameUI extends JFrame implements ActionListener {
 
         Character character = game.getCurrentCharacter();
 
-        for (String itemName : character.getInventory()) {
-            JButton button = new JButton("Equip "
-                    + itemName);
+        // Access the inventory HashMap and iterate over its entries
+        for (Map.Entry<String, Item> entry : character.getInventoryItems().entrySet()) {
+            String itemName = entry.getKey();
+            Item item = entry.getValue();
+
+            // Create a new JButton for each item in the inventory
+            JButton button = new JButton("Equip " + itemName);
+            button.putClientProperty("item", item); // Attach the item object directly to the button
             button.setActionCommand("equip");
-            button.addActionListener(this);
-            optionsPanel.add(button);
+            button.addActionListener(this); // Assuming 'this' is an ActionListener that handles the button actions
+            optionsPanel.add(button); // Add the button to your panel
         }
 
         if (character.getEquipedWeapon() != null) {
@@ -391,24 +399,22 @@ public class GameUI extends JFrame implements ActionListener {
                 break;
             case "trade":
                 JButton sourceButton = (JButton) e.getSource();
-                String itemName = sourceButton.getText().substring(10); // "Trade for ".length() == 10
+                Item item = (Item) sourceButton.getClientProperty("item");
                 TradeNode tradeNode = (TradeNode) game.getCurrentNode();
-                tradeNode.tradeItem(itemName);
+                tradeNode.setItem(item);
                 Node nextNode_ = tradeNode.chooseNext();
                 game.advanceToNode(nextNode_.getId());
                 break;
             case "equip":
                 JButton sourceButton_ = (JButton) e.getSource();
-                String[] itemDetails = sourceButton_.getText().split(",")[0].split(" ");
-                String equipItemName = itemDetails[2];
-                game.getCurrentCharacter().equipItem(equipItemName);
+                Item item_ = (Item) sourceButton_.getClientProperty("item");
+                game.getCurrentCharacter().equipItem(item_);
                 break;
             case "unequip":
                 game.getCurrentCharacter().unequipItem();
                 break;
             case "select_warrior":
                 Character currentCharacter = game.getCurrentCharacter();
-                ;
 
                 replaceCharacterWith(new Warrior(currentCharacter.getName(),
                         currentCharacter.getHealth(),

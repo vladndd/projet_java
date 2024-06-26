@@ -1,28 +1,25 @@
 package core;
 
 import representation.*;
-import univers.base.*;
-import univers.base.Character;
+import univers.Character;
+import univers.Planet;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 // JAVADOC, clean code add readme.md
 
 public class Game implements Serializable {
     private Node currentNode;
     public static final List<Planet> PLANETS_LIST = new ArrayList<>();
-    private List<City> cities = new ArrayList<>();
     private Character character;
     private NodeFactory nodeFactory;
     private static final long serialVersionUID = 1L; // Add serialVersionUID
 
     public Game() {
         initializePlanets();
-        initializeCitiesOnPlanets();
     }
 
     public Node getCurrentNode() {
@@ -75,18 +72,6 @@ public class Game implements Serializable {
         PLANETS_LIST.add(new Planet("Uranus", "Ice giant with a tilted axis."));
         PLANETS_LIST.add(new Planet("Neptune", "Cold blue planet with strong winds."));
         PLANETS_LIST.add(new Planet("Pluto", "Dwarf planet with a heart-shaped glacier."));
-    }
-
-    private void initializeCitiesOnPlanets() {
-        for (Planet planet : PLANETS_LIST) {
-            int numCities = new Random().nextInt(3) + 1;
-            for (int i = 0; i < numCities; i++) {
-                String cityName = planet.getName() + " City " + (i + 1);
-                City city = new City(cityName, planet);
-                cities.add(city);
-                planet.addCity(city);
-            }
-        }
     }
 
     public void createNodePool() throws IOException {

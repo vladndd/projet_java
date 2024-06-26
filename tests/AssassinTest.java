@@ -3,10 +3,10 @@ package tests;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import univers.base.Assassin;
-import univers.base.Item;
-import univers.base.Planet;
-import univers.base.Race;
+import univers.Assassin;
+import univers.Item;
+import univers.Planet;
+import univers.Race;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,18 +23,6 @@ class AssassinTest {
                                                                                    // Planet(name)
         assassin = new Assassin("Vega", 100, 10, mockRace, 20, mockPlanet);
         mockItem = new Item("Dagger", 2, 10, 1, 50, 1);
-    }
-
-    @Test
-    void testInteract() {
-        assassin.interact();
-        // Check the output or behavior if specific implementations are required
-    }
-
-    @Test
-    void testSpeak() {
-        assassin.speak();
-        // Check the output or behavior if specific implementations are required
     }
 
     @Test

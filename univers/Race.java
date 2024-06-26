@@ -1,4 +1,4 @@
-package univers.base;
+package univers;
 
 public enum Race {
     Human(0, 0),

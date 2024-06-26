@@ -1,4 +1,4 @@
-package univers.base;
+package univers;
 
 import java.io.Serializable;
 

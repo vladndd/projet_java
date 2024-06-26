@@ -4,24 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import core.Game;
-import univers.base.Character;
-import univers.base.Item;
+import univers.Character;
+import univers.Item;
+import java.util.Random;
+
+import javax.swing.JOptionPane;
 
 public class TradeNode extends Node {
     private List<Item> itemsForSale;
     private List<Node> options;
     private Game game;
+    private Item item;
+    private Random random;
 
     public TradeNode(int id, String description, List<Item> itemsForSale, Game game) {
         super(id, description);
         this.itemsForSale = itemsForSale;
         this.options = new ArrayList<>();
         this.game = game;
-
+        this.random = new Random();
     }
 
     public void addChanceOption(Node node) {
-        // Placeholder: adding options for trading
         this.options.add(node);
     }
 
@@ -29,34 +33,33 @@ public class TradeNode extends Node {
         return itemsForSale;
     }
 
-    public void tradeItem(String itemKey) {
-        Item itemToTrade = null;
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+    public void tradeItem(Item item) {
+        Item itemToTrade = item;
         Character character = game.getCurrentCharacter();
-        for (Item item : itemsForSale) {
-            if (item.getName().equals(itemKey)) {
-                itemToTrade = item;
-                break;
-            }
-        }
 
         if (itemToTrade != null && character.hasEnoughMoney(itemToTrade.getPrice())) {
             character.trade(itemToTrade);
             character.decreaseMoney(itemToTrade.getPrice());
+            JOptionPane.showMessageDialog(null, "Trade successful!", "Trade Status", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            System.out.println("Not enough money or item not found");
+            JOptionPane.showMessageDialog(null, "Not enough money or item not found", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
     @Override
     public Node chooseNext() {
-        // Logic for choosing the next node after trading
-        // Placeholder: assuming trade completion determines the next node
-        return this.options.get(0); // Trade completed
+        this.tradeItem(this.item);
+        int index = random.nextInt(options.size());
+        return this.options.get(index);
     }
 
     @Override
     public Node checkNext() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'checkNext'");
     }
 }

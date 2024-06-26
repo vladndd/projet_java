@@ -7,10 +7,10 @@ public class TerminalNode extends Node {
 
     @Override
     public Node chooseNext() {
-        return this; // Retourne lui-même, car c'est un nœud terminal.
+        return this;
     }
 
     public Node checkNext() {
-        return this; // Retourne lui-même, car c'est un nœud terminal.
+        return this;
     }
 }

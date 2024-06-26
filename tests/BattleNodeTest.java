@@ -7,7 +7,7 @@ import core.Game;
 import representation.BattleNode;
 import representation.InnerNode;
 import representation.Node;
-import univers.base.Race;
+import univers.Race;
 
 import static org.junit.jupiter.api.Assertions.*;
 
