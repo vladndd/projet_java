@@ -3,8 +3,6 @@ package univers;
 import java.io.Serializable;
 import java.util.HashMap;
 
-import javax.swing.JOptionPane;
-
 /**
  * Character is an abstract class representing a character in the game.
  * It includes attributes such as name, health, force, race, planet, inventory,
@@ -38,7 +36,7 @@ public abstract class Character implements Serializable, Interact {
         this.force = force + race.getForceBonus();
         this.race = race;
         this.planet = planet;
-        this.equipedWeapon = new Item("Sword", 5, 10, 0, 50, 1);
+        this.equipedWeapon = new Item("Sword", 5, 10, 0, 50, 1); // default weapon
         this.money = 100; // for all characters
         this.maxweight = 100; // for all characters
     }
@@ -48,14 +46,23 @@ public abstract class Character implements Serializable, Interact {
      *
      * @param item The item to be traded.
      */
-    public abstract void trade(Item item);
+    @Override
+    public void trade(Item item) {
+        this.addToInventory(item);
+    }
 
     /**
      * Reduces the health of the character by the specified damage intake.
      *
      * @param intakeDamage The damage to be subtracted from the health.
      */
-    public abstract void fight(int intakeDamage);
+    @Override
+    public void fight(int intakeDamage) {
+        this.health -= intakeDamage;
+        if (this.health <= 0) {
+            this.health = 0;
+        }
+    }
 
     /**
      * Gets the specific attribute of the character.
@@ -186,6 +193,15 @@ public abstract class Character implements Serializable, Interact {
      */
     public void decreaseMoney(int amount) {
         money -= amount;
+    }
+
+    /**
+     * Increases the money of the character by the specified amount.
+     *
+     * @param amount The amount to be added to the money.
+     */
+    public void increaseMoney(int amount) {
+        money += amount;
     }
 
     /**

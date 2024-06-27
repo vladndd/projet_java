@@ -1,8 +1,6 @@
 package univers;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Planet class represents a planet in the game.
@@ -11,7 +9,6 @@ import java.util.List;
 public class Planet implements Serializable {
     private String name;
     private String typeClimat;
-    private List<Race> racesIndigenes;
 
     /**
      * Constructs a Planet instance with the specified parameters.
@@ -22,16 +19,7 @@ public class Planet implements Serializable {
     public Planet(String name, String typeClimat) {
         this.name = name;
         this.typeClimat = typeClimat;
-        this.racesIndigenes = new ArrayList<>();
-    }
 
-    /**
-     * Adds an indigenous race to the planet.
-     *
-     * @param race The race to be added.
-     */
-    public void ajouterRaceIndigene(Race race) {
-        racesIndigenes.add(race);
     }
 
     /**
@@ -50,14 +38,5 @@ public class Planet implements Serializable {
      */
     public String getTypeClimat() {
         return typeClimat;
-    }
-
-    /**
-     * Gets the list of indigenous races on the planet.
-     *
-     * @return A list of indigenous races.
-     */
-    public List<Race> getRacesIndigenes() {
-        return racesIndigenes;
     }
 }

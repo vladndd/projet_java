@@ -94,12 +94,12 @@ public abstract class Node implements Serializable, Event {
      * Sets the background image of the node from a given image path.
      *
      * @param imagePath The path to the background image file.
+     * @throws IllegalArgumentException If the image path is invalid.
      */
-    public void setBackgroundImage(String imagePath) {
+    public void setBackgroundImage(String imagePath) throws IllegalArgumentException {
         this.backgroundImage = new ImageIcon(imagePath);
-        System.out.println("Loading image from: " + imagePath);
         if (backgroundImage.getImageLoadStatus() != MediaTracker.COMPLETE) {
-            System.out.println("Error loading image: " + imagePath);
+            throw new IllegalArgumentException("Invalid image path: " + imagePath);
         }
     }
 }

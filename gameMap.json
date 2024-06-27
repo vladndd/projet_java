@@ -462,7 +462,7 @@
             "chanceOptions": [
                 {
                     "id": 42,
-                    "description": "You defeated the space pirates and took their loot."
+                    "description": "You defeated the space pirates and won the game !."
                 },
                 {
                     "id": 43,
@@ -484,7 +484,7 @@
         {
             "type": "TerminalNode",
             "id": 42,
-            "description": "You defeated the space pirates and took their loot.",
+            "description": "You defeated the space pirates and won the game !.",
             "backgroundImage": "./images/scene22.jpg"
         },
         {

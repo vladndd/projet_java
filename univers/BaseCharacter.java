@@ -22,31 +22,6 @@ public class BaseCharacter extends Character {
     }
 
     /**
-     * Trades the specified item by adding it to the inventory.
-     *
-     * @param item The item to be traded.
-     */
-    @Override
-    public void trade(Item item) {
-        this.addToInventory(item);
-    }
-
-    /**
-     * Reduces the health of the character by the specified damage intake.
-     * If health drops to zero or below, it is set to zero.
-     *
-     * @param intakeDamage The damage to be subtracted from the health.
-     */
-    @Override
-    public void fight(int intakeDamage) {
-        this.health -= intakeDamage;
-
-        if (this.health <= 0) {
-            this.health = 0;
-        }
-    }
-
-    /**
      * Gets the specific attribute of the character.
      *
      * @return A string representing that the character has no specific attribute.

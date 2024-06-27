@@ -24,30 +24,6 @@ public class Warrior extends Character {
     }
 
     /**
-     * Reduces the health of the warrior by the specified damage intake.
-     * If health drops to zero or below, it is set to zero.
-     *
-     * @param intakeDamage The damage to be subtracted from the health.
-     */
-    @Override
-    public void fight(int intakeDamage) {
-        this.health -= intakeDamage;
-        if (this.health <= 0) {
-            this.health = 0;
-        }
-    }
-
-    /**
-     * Trades the specified item by adding it to the inventory.
-     *
-     * @param item The item to be traded.
-     */
-    @Override
-    public void trade(Item item) {
-        this.addToInventory(item);
-    }
-
-    /**
      * Gets the combat power of the warrior.
      *
      * @return The combat power value.

@@ -82,7 +82,7 @@ public class NodeFactory implements Serializable {
             case "PuzzleNode":
                 String puzzleQuestion = nodeJson.get("puzzleQuestion").asText();
                 String puzzleAnswer = nodeJson.get("correctAnswer").asText();
-                PuzzleNode puzzleNode = new PuzzleNode(id, description, puzzleQuestion, puzzleAnswer);
+                PuzzleNode puzzleNode = new PuzzleNode(id, description, puzzleQuestion, puzzleAnswer, game);
                 if (nodeJson.has("backgroundImage")) {
                     puzzleNode.setBackgroundImage(nodeJson.get("backgroundImage").asText());
                 }

@@ -70,12 +70,7 @@ public class Game implements Serializable {
      * @param nodeId The ID of the node to advance to.
      */
     public void advanceToNode(int nodeId) {
-        System.out.println("Advancing to node: " + nodeId);
         currentNode = this.nodeFactory.getNode(nodeId);
-
-        if (currentNode instanceof TerminalNode) {
-            System.out.println("Game over: " + currentNode.getDescription());
-        }
     }
 
     /**

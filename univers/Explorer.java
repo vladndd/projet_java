@@ -24,26 +24,6 @@ public class Explorer extends Character {
     }
 
     /**
-     * Reduces the health of the explorer by the specified damage intake.
-     *
-     * @param intakeDamage The damage to be subtracted from the health.
-     */
-    @Override
-    public void fight(int intakeDamage) {
-        this.health -= intakeDamage;
-    }
-
-    /**
-     * Trades the specified item by adding it to the inventory.
-     *
-     * @param item The item to be traded.
-     */
-    @Override
-    public void trade(Item item) {
-        this.addToInventory(item);
-    }
-
-    /**
      * Gets the intelligence of the explorer.
      *
      * @return The intelligence value.

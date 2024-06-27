@@ -84,7 +84,6 @@ public class BattleNode extends Node {
         int enemyAttackYou = character.getHealth() - this.enemyAttack;
         int yourAttackOnEnemy = this.enemyHealth - character.getForce();
 
-        System.out.println("You have " + enemyAttackYou + " health left.");
         character.fight(enemyAttack);
 
         if (enemyAttackYou <= 0) {

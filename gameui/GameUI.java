@@ -166,7 +166,8 @@ public class GameUI extends JFrame implements ActionListener {
                 "Race: " + character.getRace() + "\n" +
                 "Character Type: " + character.getCharacterType() + "\n" +
                 "Specific attribute " + character.getSpecificAttribute() + "\n" +
-                "Current Planet: " + character.getStartPlanetName() + "\n" +
+                "Current Planet: " + character.getStartPlanetName() + " climate : "
+                + character.getStartPlanet().getTypeClimat() + "\n" +
                 "Health: " + character.getHealth() + "\n" +
                 "Force: " + character.getForce() + "\n" +
                 "Money: " + character.getMoney() + "\n" +
@@ -270,8 +271,7 @@ public class GameUI extends JFrame implements ActionListener {
         try {
             game.createNodePool();
         } catch (IOException e) {
-            System.out.println("Error creating node pool");
-            e.printStackTrace();
+            throw new RuntimeException("Error creating node pool", e);
         }
 
         setContentPane(mainContentPanel); // Switch back to the main content panel
