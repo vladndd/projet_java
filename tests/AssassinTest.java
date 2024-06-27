@@ -36,7 +36,7 @@ class AssassinTest {
         assassin.trade(mockItem);
         assertNotNull(assassin.getInventory());
         assertTrue(assassin.getInventory().length > 0);
-        assertEquals("Name: Dagger, Attack: 50, Price: 2, Health: 1, Quantity: 1, Weight: 10",
+        assertEquals("Name: Dagger,Attack: 50,Price: 2,Health: 1,Quantity: 1,Weight: 10",
                 assassin.getInventory()[0]);
     }
 

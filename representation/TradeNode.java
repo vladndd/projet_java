@@ -73,6 +73,11 @@ public class TradeNode extends Node {
         Item itemToTrade = item;
         Character character = game.getCurrentCharacter();
 
+        if (item.getWeight() + character.getCurrentWeight() > character.getMaxWeight()) {
+            JOptionPane.showMessageDialog(null, "Item is too heavy to carry", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         if (itemToTrade != null && character.hasEnoughMoney(itemToTrade.getPrice())) {
             character.trade(itemToTrade);
             character.decreaseMoney(itemToTrade.getPrice());

@@ -79,6 +79,15 @@ public class NodeFactory implements Serializable {
                 }
                 node = innerNode;
                 break;
+            case "PuzzleNode":
+                String puzzleQuestion = nodeJson.get("puzzleQuestion").asText();
+                String puzzleAnswer = nodeJson.get("correctAnswer").asText();
+                PuzzleNode puzzleNode = new PuzzleNode(id, description, puzzleQuestion, puzzleAnswer);
+                if (nodeJson.has("backgroundImage")) {
+                    puzzleNode.setBackgroundImage(nodeJson.get("backgroundImage").asText());
+                }
+                node = puzzleNode;
+                break;
             case "DecisionNode":
                 DecisionNode decisionNode = new DecisionNode(id, description);
                 if (nodeJson.has("backgroundImage")) {
@@ -182,6 +191,11 @@ public class NodeFactory implements Serializable {
                 int chanceOptionId = chanceOptionJson.get("id").asInt();
                 ((TradeNode) node).addChanceOption(nodeMap.get(chanceOptionId));
             }
+        }
+
+        if (node instanceof PuzzleNode && nodeJson.has("correctNodeId")) {
+            int correctNodeId = nodeJson.get("correctNodeId").asInt();
+            ((PuzzleNode) node).setCorrectNode(nodeMap.get(correctNodeId));
         }
     }
 

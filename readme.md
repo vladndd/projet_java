@@ -1,6 +1,6 @@
 # Game concept
 
-The game is a text-based adventure game where the player navigates through a series of nodes representing different scenarios. The player can choose different paths, make decisions, and engage in battles and trades to progress through the game. He also have an equippement that he can change. The game features multiple characters with unique attributes and abilities that affect the gameplay. The player's goal is to reach the end of the game by making strategic choices and overcoming challenges along the way.
+The game is a text-based adventure game where the player navigates through a series of nodes representing different scenarios. The player can choose different paths, make decisions, and engage in battles trades and puzzles to progress through the game. He also have an equippement that he can change. The game features multiple characters with unique attributes and abilities that affect the gameplay. The player's goal is to reach the end of the game by making strategic choices and overcoming challenges along the way.
 
 # Core Classes
 

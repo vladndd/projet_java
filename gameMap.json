@@ -216,7 +216,7 @@
             "enemyHealth": 50,
             "enemyAttack": 10,
             "characterId": 0,
-            "soundFilePath": "./sounds/test.wav",
+            "soundFilePath": "./sounds/battle.wav",
             "chanceOptions": [
                 {
                     "id": 24,
@@ -237,7 +237,7 @@
             "type": "TradeNode",
             "id": 23,
             "description": "A local trader offers you goods.",
-            "soundFilePath": "./sounds/test.wav",
+            "soundFilePath": "./sounds/trade.wav",
             "itemsForSale": [
                 {
                     "name": "Boots",
@@ -309,8 +309,8 @@
         {
             "type": "InnerNode",
             "id": 30,
-            "description": "You enter the cave and find ancient alien technology.",
-            "nextNodeId": 32,
+            "description": "You enter the cave and find the puzzle of the ancient alien technology.",
+            "nextNodeId": 3332,
             "backgroundImage": "./images/scene9.jpg"
         },
         {
@@ -319,6 +319,16 @@
             "description": "You continue exploring the planet and find a friendly alien village.",
             "nextNodeId": 33,
             "backgroundImage": "./images/scene10.jpg"
+        },
+        {
+            "type": "PuzzleNode",
+            "id": 3332,
+            "description": "Puzzle looks complicated and strange, you see a question mark on the wall.",
+            "backgroundImage": "./images/puzzle.jpg",
+            "puzzleQuestion": "what is 2 + 2?",
+            "correctAnswer": "4",
+            "correctNodeId": 32,
+            "soundFilePath": "./sounds/puzzle.wav"
         },
         {
             "type": "InnerNode",
@@ -363,7 +373,7 @@
             "id": 35,
             "type": "TradeNode",
             "description": "You trade with the aliens and gain valuable resources.",
-            "soundFilePath": "./sounds/test.wav",
+            "soundFilePath": "./sounds/trade.wav",
             "itemsForSale": [
                 {
                     "name": "Energy crystals",
@@ -448,7 +458,7 @@
             "enemyHealth": 70,
             "enemyAttack": 100,
             "characterId": 0,
-            "soundFilePath": "./sounds/test.wav",
+            "soundFilePath": "./sounds/battle.wav",
             "chanceOptions": [
                 {
                     "id": 42,

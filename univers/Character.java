@@ -80,9 +80,9 @@ public abstract class Character implements Serializable, Interact {
         String[] inventoryArray = new String[inventory.size()];
         int i = 0;
         for (Item item : inventory.values()) {
-            inventoryArray[i++] = "Name: " + item.getName() + ", Attack: " + item.getAttack() +
-                    ", Price: " + item.getPrice() + ", Health: " + item.getHealth() + ", Quantity: "
-                    + item.getQuantity() + ", Weight: " + item.getWeight();
+            inventoryArray[i++] = "Name: " + item.getName() + ",Attack: " + item.getAttack() +
+                    ",Price: " + item.getPrice() + ",Health: " + item.getHealth() + ",Quantity: "
+                    + item.getQuantity() + ",Weight: " + item.getWeight();
         }
         return inventoryArray;
     }
@@ -102,10 +102,6 @@ public abstract class Character implements Serializable, Interact {
      * @param item The item to be added to the inventory.
      */
     public void addToInventory(Item item) {
-        if (item.getWeight() + this.getCurrentWeight() > maxweight) {
-            JOptionPane.showMessageDialog(null, "Item is too heavy to carry", "Warning", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
         if (inventory.containsKey(item.getName())) {
             inventory.get(item.getName()).addQuantity(item.getQuantity());
         } else {
@@ -124,6 +120,15 @@ public abstract class Character implements Serializable, Interact {
             currentWeight += item.getWeight() * item.getQuantity();
         }
         return currentWeight;
+    }
+
+    /**
+     * Gets the max weight of the character.
+     *
+     * @return The max weight of the character.
+     */
+    public int getMaxWeight() {
+        return maxweight;
     }
 
     /**

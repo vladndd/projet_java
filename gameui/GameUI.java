@@ -43,6 +43,7 @@ public class GameUI extends JFrame implements ActionListener {
     private JTextArea statsArea;
     private JPanel mainContentPanel; // Store main content panel reference
     private SoundManager soundManager; // SoundManager instance
+    private boolean isMuted = false; // Add this variable to track mute state
 
     /**
      * Constructor for GameUI.
@@ -92,6 +93,10 @@ public class GameUI extends JFrame implements ActionListener {
         buttonPanel.setOpaque(false);
 
         // Adding buttons
+
+        JButton muteButton = createButton("Mute", "mute_game");
+        buttonPanel.add(muteButton);
+
         JButton saveButton = createButton("Save Game", "save_game");
         buttonPanel.add(saveButton);
 
@@ -165,7 +170,7 @@ public class GameUI extends JFrame implements ActionListener {
                 "Health: " + character.getHealth() + "\n" +
                 "Force: " + character.getForce() + "\n" +
                 "Money: " + character.getMoney() + "\n" +
-                "Weight: " + character.getCurrentWeight() + "\n" +
+                "Max Weight: " + character.getMaxWeight() + " current weight :" + character.getCurrentWeight() + "\n" +
                 "Equipped Weapon: "
                 + (character.getEquipedWeapon() != null ? character.getEquipedWeapon().getName() : "None") + "\n" +
                 "Inventory: " + (inventoryString.length() > 0 ? inventoryString.toString() : "Empty");
@@ -294,9 +299,10 @@ public class GameUI extends JFrame implements ActionListener {
         }
 
         // Play the associated sound for the current node
-        String soundFilePath = currentNode.getSoundFilePath(); // Assuming each node has a sound file path
+        soundManager.stopSound();
+        String soundFilePath = currentNode.getSoundFilePath();
         if (soundFilePath != null) {
-            soundManager.playSound(soundFilePath);
+            soundManager.loopSound(soundFilePath);
         }
 
         if (currentNode instanceof TerminalNode) {
@@ -329,7 +335,10 @@ public class GameUI extends JFrame implements ActionListener {
         } else if (currentNode instanceof TradeNode) {
             TradeNode tradeNode = (TradeNode) currentNode;
             for (Item item : tradeNode.getItemsForSale()) {
-                JButton button = createButton("Trade for " + item.getName() + " " + item.getPrice(), "trade");
+                JButton button = createButton(
+                        "Trade for " + item.getName() + " " + item.getPrice() + "$  weight : " + item.getWeight()
+                                + " health : " + item.getHealth() + " attack : " + item.getAttack() + " ",
+                        "trade");
                 button.putClientProperty("item", item); // Storing the item object directly on the button
                 optionsPanel.add(button);
             }
@@ -390,6 +399,21 @@ public class GameUI extends JFrame implements ActionListener {
         return button;
     }
 
+    /**
+     * Updates the mute button based on the current mute state.
+     *
+     * @param muteButton The mute button to be updated.
+     */
+    private void updateMuteButton(JButton muteButton) {
+        if (isMuted) {
+            muteButton.setText("Unmute");
+            muteButton.setActionCommand("unmute_game");
+        } else {
+            muteButton.setText("Mute");
+            muteButton.setActionCommand("mute_game");
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
@@ -445,6 +469,12 @@ public class GameUI extends JFrame implements ActionListener {
                 break;
             case "restart":
                 showMainMenu();
+                return;
+            case "mute_game":
+            case "unmute_game":
+                soundManager.toggleMute();
+                isMuted = !isMuted;
+                updateMuteButton((JButton) e.getSource());
                 return;
             case "new_game":
                 initializeCharacter();
