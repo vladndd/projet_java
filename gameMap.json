@@ -237,6 +237,7 @@
             "type": "TradeNode",
             "id": 23,
             "description": "A local trader offers you goods.",
+            "soundFilePath": "./sounds/test.wav",
             "itemsForSale": [
                 {
                     "name": "Boots",
@@ -362,6 +363,7 @@
             "id": 35,
             "type": "TradeNode",
             "description": "You trade with the aliens and gain valuable resources.",
+            "soundFilePath": "./sounds/test.wav",
             "itemsForSale": [
                 {
                     "name": "Energy crystals",

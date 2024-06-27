@@ -29,6 +29,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * GameUI class provides the graphical user interface for the Space Adventure
+ * Game.
+ * It handles the display of game content, interaction with the user, and
+ * updates to the game state.
+ */
 public class GameUI extends JFrame implements ActionListener {
     private Game game;
     private JTextArea descriptionArea;
@@ -38,8 +44,11 @@ public class GameUI extends JFrame implements ActionListener {
     private JPanel mainContentPanel; // Store main content panel reference
     private SoundManager soundManager; // SoundManager instance
 
-    // Assume other components and variables are declared elsewhere in your class
-
+    /**
+     * Constructor for GameUI.
+     *
+     * @param game The Game instance to be associated with this UI.
+     */
     public GameUI(Game game) {
         this.game = game;
         this.soundManager = new SoundManager();
@@ -50,13 +59,14 @@ public class GameUI extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    /**
+     * Initializes the main components of the UI.
+     */
     private void initializeComponents() {
         // Main content panel
         mainContentPanel = new JPanel(new BorderLayout());
         mainContentPanel.setOpaque(false);
         add(mainContentPanel, BorderLayout.CENTER);
-
-        // Background
 
         // Background label initialization and setup
         backgroundLabel = new JLabel();
@@ -100,8 +110,7 @@ public class GameUI extends JFrame implements ActionListener {
         // Add top panel to the north of the main content panel
         mainContentPanel.add(topPanel, BorderLayout.NORTH);
 
-        // Other components (description panel, etc.) would go here...
-
+        // Description area setup
         descriptionArea = new JTextArea();
         descriptionArea.setLineWrap(true);
         descriptionArea.setWrapStyleWord(true);
@@ -126,6 +135,9 @@ public class GameUI extends JFrame implements ActionListener {
         mainContentPanel.add(descriptionPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * Sets up the main frame of the UI.
+     */
     private void setupFrame() {
         setTitle("Space Adventure Game");
         setSize(600, 600);
@@ -134,6 +146,11 @@ public class GameUI extends JFrame implements ActionListener {
         setLayout(new BorderLayout());
     }
 
+    /**
+     * Updates the stats area with the character's current stats.
+     *
+     * @param character The character whose stats are to be displayed.
+     */
     private void updateStats(Character character) {
         StringBuilder inventoryString = new StringBuilder();
         for (String item : character.getInventory()) {
@@ -155,6 +172,9 @@ public class GameUI extends JFrame implements ActionListener {
         statsArea.setText(statsText);
     }
 
+    /**
+     * Initializes a new character for the game.
+     */
     private void initializeCharacter() {
         JOptionPane.showMessageDialog(this, "Welcome to the Space Adventure Game! Let's create your character!");
 
@@ -228,6 +248,9 @@ public class GameUI extends JFrame implements ActionListener {
         updateDisplay();
     }
 
+    /**
+     * Updates the display area based on the current node.
+     */
     private void updateDisplay() {
         Node currentNode = game.getCurrentNode();
 
@@ -318,11 +341,23 @@ public class GameUI extends JFrame implements ActionListener {
         optionsPanel.repaint();
     }
 
+    /**
+     * Replaces the current character with a new character.
+     *
+     * @param newCharacter The new character to be set.
+     */
     private void replaceCharacterWith(Character newCharacter) {
         game.setCharacter(newCharacter);
         updateStats(newCharacter);
     }
 
+    /**
+     * Creates a button with the specified text and action command.
+     *
+     * @param text          The text to be displayed on the button.
+     * @param actionCommand The action command to be set for the button.
+     * @return The created JButton.
+     */
     private JButton createButton(String text, String actionCommand) {
         JButton button = new JButton(text);
         button.setActionCommand(actionCommand);
@@ -408,6 +443,9 @@ public class GameUI extends JFrame implements ActionListener {
         updateDisplay();
     }
 
+    /**
+     * Displays the main menu.
+     */
     private void showMainMenu() {
         JPanel mainMenuPanel = new JPanel(new GridLayout(3, 1));
 
@@ -431,6 +469,9 @@ public class GameUI extends JFrame implements ActionListener {
         repaint();
     }
 
+    /**
+     * Loads a saved game.
+     */
     private void loadGame() {
         JFileChooser fileChooser = new JFileChooser();
         int returnValue = fileChooser.showOpenDialog(this);
@@ -447,6 +488,9 @@ public class GameUI extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Saves the current game.
+     */
     private void saveGame() {
         JFileChooser fileChooser = new JFileChooser();
         int returnValue = fileChooser.showSaveDialog(this);
@@ -462,6 +506,11 @@ public class GameUI extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Main method to launch the game UI.
+     *
+     * @param args Command line arguments.
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             Game game = new Game();

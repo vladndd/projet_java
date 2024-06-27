@@ -13,14 +13,32 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * NodeFactory class is responsible for creating and linking nodes based on a
+ * JSON configuration file.
+ * It utilizes the Jackson library to parse the JSON and instantiate the
+ * corresponding node objects.
+ */
 public class NodeFactory implements Serializable {
     private Map<Integer, Node> nodeMap = new HashMap<>();
     private Game game;
 
+    /**
+     * Constructs a NodeFactory instance with the specified game.
+     *
+     * @param game The Game instance associated with this NodeFactory.
+     */
     public NodeFactory(Game game) {
         this.game = game;
     }
 
+    /**
+     * Creates and links nodes based on the specified JSON file path.
+     *
+     * @param jsonFilePath The file path to the JSON configuration file.
+     * @return A map of node IDs to Node objects.
+     * @throws IOException If an I/O error occurs during reading the JSON file.
+     */
     public Map<Integer, Node> createNodes(String jsonFilePath) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode root = mapper.readTree(new File(jsonFilePath));
@@ -39,6 +57,12 @@ public class NodeFactory implements Serializable {
         return nodeMap;
     }
 
+    /**
+     * Creates a Node object from the specified JSON node.
+     *
+     * @param nodeJson The JSON node representing the node to be created.
+     * @return The created Node object.
+     */
     private Node createNodeFromJson(JsonNode nodeJson) {
         String type = nodeJson.get("type").asText();
         int id = nodeJson.get("id").asInt();
@@ -113,6 +137,11 @@ public class NodeFactory implements Serializable {
         return node;
     }
 
+    /**
+     * Links nodes based on the relationships defined in the specified JSON node.
+     *
+     * @param nodeJson The JSON node representing the node relationships.
+     */
     private void linkNodes(JsonNode nodeJson) {
         int id = nodeJson.get("id").asInt();
         Node node = nodeMap.get(id);
@@ -156,6 +185,12 @@ public class NodeFactory implements Serializable {
         }
     }
 
+    /**
+     * Retrieves a node by its ID.
+     *
+     * @param id The ID of the node to be retrieved.
+     * @return The Node object with the specified ID, or null if not found.
+     */
     public Node getNode(int id) {
         return nodeMap.get(id);
     }

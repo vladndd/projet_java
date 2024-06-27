@@ -1,49 +1,135 @@
-# Space Adventure Game
+# Game concept
 
-## Description
+The game is a text-based adventure game where the player navigates through a series of nodes representing different scenarios. The player can choose different paths, make decisions, and engage in battles and trades to progress through the game. He also have an equippement that he can change. The game features multiple characters with unique attributes and abilities that affect the gameplay. The player's goal is to reach the end of the game by making strategic choices and overcoming challenges along the way.
 
-Space Adventure is an interactive "choose your own adventure" game set in a sprawling universe where decisions and random events determine the outcome of the story. Players navigate through a series of decision nodes, chance nodes, and terminal nodes which collectively shape the narrative and conclusion of the game.
+# Core Classes
 
-## Features
+## Game
 
-- **Dynamic Story Paths:** Each choice leads to a new path, with different outcomes based on decisions and chance events.
-- **Character Customization:** Players can choose their character's name, race, and starting planet, each affecting the game's progression.
-- **Multimedia Enhancements:** The game includes sound and image decorations at certain nodes to enhance player immersion.
-- **Persistent Game State:** Players can save their game state to a file and load it later to continue their adventure.
+Manages the overall game state, including the current node, characters, and game progress.
 
-## Prerequisites
+- **Methods:**
+  - advanceToNode(int nodeId): Advances the game to the specified node.
+  - saveGame(String filename): Saves the current game state to a file.
+  - loadGame(String filename): Loads a game state from a file.
+  - createNodePool(): Initializes the nodes for the game from a configuration file.
 
-Before you start playing the game, ensure you have Java installed on your machine. The game is compatible with Java 11 and above.
+## NodeFactory
 
-## Setup
+Creates and links nodes based on a configuration file.
 
-1. Clone the repository to your local machine or download the ZIP file and extract it.
-2. Navigate to the directory containing the game files.
+- **Methods:**
+  - createNodes(String jsonFilePath): Creates nodes from a JSON configuration file.
+  - getNode(int id): Retrieves a node by its ID.
 
-## How to Play
+# Representation Classes
 
-1. Start the game by running the `Main` class.
-2. Follow the on-screen prompts to create your character and begin your adventure.
-3. Make choices at decision points to determine the direction of your story.
-4. Save your game at any point to continue later.
+## Node
 
-## Game Structure
+An abstract class representing a point in the game.
 
-- **Nodes:** The game uses various types of nodes to construct the gameplay:
-  - **DecisionNode:** Where the player must make a choice.
-  - **ChanceNode:** Where the outcome is determined by a random event.
-  - **TerminalNode:** Marks the conclusion of the game path.
-  - **InnerNode:** Represents a non-terminal node that connects other nodes.
-- **Game:** The game class manages the
-- **Character:** The character class stores characters information.
-- **Planet:** Each planet has unique characteristics that influence the game.
-- **Event:** Represents a random event that can occur at chance nodes.
-- **BaseCharacter:** An abstract class that defines the base character attributes.
-- **Explorer:** A subclass of BaseCharacter that represents the explorer character.
-- **Warior:** A subclass of BaseCharacter that represents the warrior character.
-- **Interact:** A utility interface that describes user input.
-- **Race:** An enum class that defines the races
+- **Methods:**
+  - chooseNext(): Determines the next node in the sequence.
+  - checkNext(): Checks the next node without advancing.
 
-## Development
+## BattleNode
 
-This project was developed using Java. It utilizes object-oriented principles such as inheritance, polymorphism, and encapsulation to manage the game logic and structure.
+Represents a battle scenario.
+
+- **Methods:**
+  - chooseNext(): Determines the next node based on the battle outcome.
+
+## ChanceNode
+
+Represents a node with random outcomes.
+
+- **Methods:**
+  - chooseNext(): Randomly selects the next node from possible outcomes.
+  - checkNext(): Randomly checks the next node without advancing.
+
+## DecisionNode
+
+Represents a node where the player must make a choice.
+
+- **Methods:**
+  - chooseNext(): Determines the next node based on player's choice.
+
+## TradeNode
+
+Represents a node where the player can trade items.
+
+- **Methods:**
+  - tradeItem(Item item): Handles trading an item.
+  - chooseNext(): Determines the next node after trading.
+
+## TerminalNode
+
+Represents an end point in the game.
+
+- **Methods:**
+  - chooseNext(): Returns the current node as the next node since it's the end.
+
+# Utility Classes
+
+## GameUIutilities
+
+Provides utility methods for the game UI.
+
+- **Methods:**
+  - updatePlanet(Game game, int nodeId): Updates the current planet in the game based on the node ID.
+  - createCharacterSelectionButton(int optionId): Creates a JButton for character selection.
+  - isHomePlanet(Game game, int optionId): Checks if the specified option ID corresponds to the character's home planet.
+
+## SoundManager
+
+Manages sound playback.
+
+- **Methods:**
+  - playSound(String filePath): Plays a sound from the specified file path.
+  - stopSound(): Stops the currently playing sound.
+  - loopSound(String filePath): Loops a sound continuously from the specified file path.
+
+## Utility
+
+Provides a static Scanner instance for user input.
+
+- **Methods:**
+  - closeScanner(): Closes the Scanner instance.
+
+# Character Classes
+
+## Character
+
+An abstract class representing the player character.
+
+- **Subclasses:** Warrior, Assassin, Explorer, BaseCharacter
+- **Methods:**
+  - fight(int intakeDamage): Reduces the health of the character by the specified damage intake.
+  - trade(Item item): Trades the specified item by adding it to the inventory.
+  - getSpecificAttribute(): Gets the specific attribute of the character.
+  - specificDamage(): Gets the specific damage of the character.
+
+## Warrior
+
+A subclass of Character with combat power-based attributes.
+
+- **Methods:**
+  - getCombatPower(): Gets the combat power of the warrior.
+  - getSpecificAttribute(): Gets the combat power attribute.
+  - specificDamage(): Gets the combat power value as specific damage.
+
+## Assassin
+
+A subclass of Character with agile damage-based attributes.
+
+- **Methods:**
+  - getSpecificAttribute(): Gets the agile damage attribute.
+  - specificDamage(): Gets the agile damage value as specific damage.
+
+## Explorer
+
+A subclass of Character with intelligence-based attributes.
+
+- **Methods:**
+  - getSpecificAttribute(): Gets the intelligence attribute.
+  - specificDamage(): Gets the intelligence value as specific damage.

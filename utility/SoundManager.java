@@ -4,9 +4,18 @@ import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * SoundManager class provides methods to manage sound playback, including
+ * playing, stopping, and looping sounds.
+ */
 public class SoundManager {
     private Clip clip;
 
+    /**
+     * Plays a sound from the specified file path.
+     *
+     * @param filePath The path to the sound file.
+     */
     public void playSound(String filePath) {
         try {
             File soundFile = new File(filePath);
@@ -19,12 +28,20 @@ public class SoundManager {
         }
     }
 
+    /**
+     * Stops the currently playing sound if it is running.
+     */
     public void stopSound() {
         if (clip != null && clip.isRunning()) {
             clip.stop();
         }
     }
 
+    /**
+     * Loops a sound continuously from the specified file path.
+     *
+     * @param filePath The path to the sound file.
+     */
     public void loopSound(String filePath) {
         try {
             File soundFile = new File(filePath);

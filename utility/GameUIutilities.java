@@ -1,13 +1,22 @@
 package utility;
 
 import univers.Planet;
+import core.Game;
 
 import javax.swing.JButton;
 
-import core.*;
-
+/**
+ * GameUIutilities class provides utility methods for updating game state and
+ * creating UI components.
+ */
 public class GameUIutilities {
 
+    /**
+     * Updates the current planet in the game based on the specified node ID.
+     *
+     * @param game   The Game instance.
+     * @param nodeId The node ID to determine the planet update.
+     */
     static public void updatePlanet(Game game, int nodeId) {
         switch (nodeId) {
             case 5:
@@ -40,6 +49,12 @@ public class GameUIutilities {
         }
     }
 
+    /**
+     * Creates a JButton for character selection based on the specified option ID.
+     *
+     * @param optionId The option ID to determine the character selection button.
+     * @return A JButton configured for character selection.
+     */
     static public JButton createCharacterSelectionButton(int optionId) {
         JButton button = null;
         switch (optionId) {
@@ -59,6 +74,14 @@ public class GameUIutilities {
         return button;
     }
 
+    /**
+     * Checks if the specified option ID corresponds to the character's home planet.
+     *
+     * @param game     The Game instance.
+     * @param optionId The option ID to check.
+     * @return True if the option ID corresponds to the home planet, false
+     *         otherwise.
+     */
     static public boolean isHomePlanet(Game game, int optionId) {
         String currentPlanet = game.getCurrentCharacter().getStartPlanetName();
         switch (optionId) {
@@ -84,5 +107,4 @@ public class GameUIutilities {
                 return false;
         }
     }
-
 }
