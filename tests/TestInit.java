@@ -76,4 +76,5 @@ class StubCharacter extends Character {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getCharacterType'");
     }
+
 }

@@ -203,9 +203,18 @@ public class GameUI extends JFrame implements ActionListener {
             planetPanel.add(planetButtonPanel);
         }
 
-        JOptionPane.showMessageDialog(this, planetPanel, "Choose your starting planet", JOptionPane.QUESTION_MESSAGE);
-
-        int planetChoice = Integer.parseInt(planetGroup.getSelection().getActionCommand());
+        int planetChoice;
+        do {
+            JOptionPane.showMessageDialog(this, planetPanel, "Choose your starting planet",
+                    JOptionPane.QUESTION_MESSAGE);
+            try {
+                planetChoice = Integer.parseInt(planetGroup.getSelection().getActionCommand());
+                break;
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Please select a valid planet.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        } while (true);
 
         JPanel racePanel = new JPanel();
         racePanel.setLayout(new GridLayout(2, 3));
@@ -219,11 +228,27 @@ public class GameUI extends JFrame implements ActionListener {
             racePanel.add(raceButton);
         }
 
-        JOptionPane.showMessageDialog(this, racePanel, "Choose your race", JOptionPane.QUESTION_MESSAGE);
+        int raceChoice;
+        do {
+            JOptionPane.showMessageDialog(this, racePanel, "Choose your race", JOptionPane.QUESTION_MESSAGE);
+            try {
+                raceChoice = Integer.parseInt(raceGroup.getSelection().getActionCommand());
+                break;
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Please select a valid race.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } while (true);
 
-        int raceChoice = Integer.parseInt(raceGroup.getSelection().getActionCommand());
-
-        String name = JOptionPane.showInputDialog(this, "Enter your name:");
+        String name;
+        do {
+            name = JOptionPane.showInputDialog(this, "Enter your name:");
+            if (name != null && !name.trim().isEmpty()) {
+                break;
+            } else {
+                JOptionPane.showMessageDialog(this, "Name cannot be empty. Please enter a valid name.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        } while (true);
 
         Race race = races[raceChoice];
         Planet planet = Game.PLANETS_LIST.get(planetChoice);
