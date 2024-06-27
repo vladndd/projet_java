@@ -126,7 +126,12 @@ public abstract class Character implements Serializable, Interact {
         for (Item item : inventory.values()) {
             currentWeight += item.getWeight() * item.getQuantity();
         }
-        return currentWeight;
+
+        if (equipedWeapon == null) {
+            return currentWeight;
+        }
+
+        return currentWeight + equipedWeapon.getWeight();
     }
 
     /**

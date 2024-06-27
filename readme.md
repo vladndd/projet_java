@@ -2,6 +2,27 @@
 
 The game is a text-based adventure game where the player navigates through a series of nodes representing different scenarios. The player can choose different paths, make decisions, and engage in battles trades and puzzles to progress through the game. He also have an equippement that he can change. The game features multiple characters with unique attributes and abilities that affect the gameplay. The player's goal is to reach the end of the game by making strategic choices and overcoming challenges along the way.
 
+# Game UI
+
+## GameUI
+
+Manages the game user interface.
+
+- **Methods:**
+  - initializeComponents(): Initializes the components of the game UI.
+  - setupFrame(): Sets up the frame for the game UI.
+  - updateStats(): Updates the player character's stats on the UI.
+  - initializeCharacter(): Initializes the character selection screen.
+  - updateDisplay(): Updates the display based on the current node.
+  - replaceCharacterWith(): Replaces the character with new one.
+  - createButton(String text, int actionCommand): Creates a JButton with the specified text and action command.
+  - updateMuteButton(): Updates the mute button based on the sound state.
+  - actionPerformed(ActionEvent e): Handles action events for the game UI.
+  - showMainMenu(): Shows the main menu screen.
+  - loadGame(): Loads a saved game state.
+  - saveGame(): Saves the current game state.
+  - main(String[] args): The main method to start the game.
+
 # Core Classes
 
 ## Game
