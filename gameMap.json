@@ -325,8 +325,8 @@
             "id": 3332,
             "description": "Puzzle looks complicated and strange, you see a question mark on the wall.",
             "backgroundImage": "./images/puzzle.jpg",
-            "puzzleQuestion": "what is 2 + 2?",
-            "correctAnswer": "4",
+            "puzzleQuestion": "You find a locked door with a keypad. The note next to it says: “The code is the product of the first three prime numbers.”",
+            "correctAnswer": "30",
             "correctNodeId": 32,
             "soundFilePath": "./sounds/puzzle.wav"
         },
